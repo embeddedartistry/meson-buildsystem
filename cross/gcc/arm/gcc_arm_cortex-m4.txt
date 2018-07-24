@@ -22,10 +22,13 @@ ld = 'arm-none-eabi-ld'
 #alignment_void* = 4
 #alignment_double = 4
 #has_function_printf = false
-c_args = [ '-mcpu=cortex-m4', '--specs=nosys.specs' ]
+c_args = [ '-mcpu=cortex-m4' ]
 c_link_args = []
-cpp_args = [ '-mcpu=cortex-m4', '--specs=nosys.specs' ]
+cpp_args = [ '-mcpu=cortex-m4' ]
 cpp_link_args = []
+
+# TODO: Add our c_stdlib
+# c_stdlib = ['mylibc', 'mylibc_dep'] # Subproject name, dependency name
 
 # Keep this set, or else
 needs_exe_wrapper = true
