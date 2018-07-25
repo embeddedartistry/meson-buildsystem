@@ -5,7 +5,6 @@
 
 clang_warnings = [
 	'-pedantic',
-	'-pedantic-errors',
 	'-Weverything'
 ]
 # Is this needed? '-Qunused-arguments'
