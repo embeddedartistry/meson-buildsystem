@@ -7,7 +7,6 @@ gcc_warnings = [
 	'-Wextra',
 	'-Weffc++',
 	'-pedantic',
-	'-pedantic-errors',
 	'-Wconversion',
 	'-Wold-style-cast',
 	'-Wfloat-equal',
