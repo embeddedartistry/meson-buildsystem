@@ -3,9 +3,12 @@
 stdlib_compiler_flags = [
 	'-fno-builtin',
 	'-nodefaultlibs',
+	'-nostdinc++'
 ]
 
+# TODO: is this ever valid? 	'-nostdlib++',
 stdlib_link_flags = [
+	'-nostdlib',
 	'-nodefaultlibs',
 	'-nostartfiles'
 ]
