@@ -1,50 +1,55 @@
-# This makefile is used to provide convenient access to the generated  makefile
-# This makefile would go at your project root
+# you can set this to 1 to see all commands that are being run
+export VERBOSE := 0
 
-ifeq ($(OS),Windows_NT)
-    detected_OS := Windows
+ifeq ($(VERBOSE),1)
+export Q :=
+export VERBOSE := 1
 else
-    detected_OS := $(shell sh -c 'uname -s 2>/dev/null || echo NotDetected')
+export Q := @
+export VERBOSE := 0
 endif
 
-ifeq ($(detected_OS), "Windows")
-	premake_BIN := premake5.exe
-else
-	premake_BIN := premake5
-endif
+ENFORCESIZE = @(FILESIZE=`stat -f '%z' $1` ; \
+	if [ $2 -gt 0 ]; then \
+		if [ $$FILESIZE -gt $2 ] ; then \
+			echo "ERROR: File $1 exceeds size limit ($$FILESIZE > $2)" ; \
+			exit 1 ; \
+		fi ; \
+	fi )
 
-# Specify the premake file to build. By default, we'll try to use the example.
-PREMAKE_FILE ?= build/example/premake5.lua
+BUILDRESULTS?=buildresults
 
-# Export all args to act as a passthrough
-export
+all: buildall
 
-all: build
+groundwork:
+	$(Q) mkdir -p $(BUILDRESULTS)
+	$(Q) meson --buildtype plain $(BUILDRESULTS)
 
-.PHONY: build_gen
-build_gen:
-	@echo "Detected OS: ${detected_OS}. Using Premake binary: build/bin/${detected_OS}/${premake_BIN}"
-	@build/bin/${detected_OS}/${premake_BIN} --file=premake5.lua gmake
+.PHONY: buildall
+buildall: groundwork
+	$(Q)cd $(BUILDRESULTS); ninja
 
-.PHONY: build
-build: build_gen
-	@make -C build/gen/
+.PHONY: docs
+docs: groundwork
+	$(Q)cd $(BUILDRESULTS); ninja docs
 
-.PHONY: help
-help: build_gen
-	@make -C build/gen/ help
+.PHONY: format
+format:
+	$(Q)tools/format/clang-format-all.sh
+
+.PHONY : format-diff
+format-diff :
+	$(Q)tools/format/clang-format-git-diff.sh
+
+.PHONY : format-check
+format-check :
+	$(Q)tools/format/clang-format-patch.sh
+
+.PHONY: analyze
+analyze: groundwork
+	$(Q) cd $(BUILDRESULTS); ninja scan-build
 
 .PHONY: clean
 clean:
-	@make -C build/gen/ clean
-	@rm -rf buildresults
-
-.PHONY: purify
-purify:
-	@rm -rf build/gen
-
-.PHONY: regen
-regen:
-	@build/bin/premake5 --file=build/premake5.lua gmake
-
-
+	$(Q)echo Cleaning Build Output
+	$(Q)rm -rf $(BUILDRESULTS)/
