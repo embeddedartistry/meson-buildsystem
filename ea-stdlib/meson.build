@@ -1,28 +1,31 @@
 # Configures Meson to use the EA Standard Library
+#
+# NOTE: if we are on OSX, we can't link as '-static'...
 
 # TODO: is this ever valid? -nostdinc
 stdlib_compiler_flags = [
 	'-fno-builtin',
 	'-nodefaultlibs',
-	'-nostdinc++'
+	'-nostdinc++',
+	# TODO: Can we define a stack protector?
+	'-fno-stack-protector',
 ]
 
 # TODO: is this ever valid? 	'-nostdlib++',
 stdlib_link_flags = [
 	'-nostdlib',
 	'-nodefaultlibs',
-	'-nostartfiles'
+	'-nostartfiles',
 ]
 
 if meson.is_cross_build()
-	stdlib_compiler_flags += '-fPIC'
+	stdlib_compiler_flags += ['-fPIC', '-ffreestanding']
 endif
-
-# if we are on OSX, we can't link as '-static'...
 
 compiler_id = meson.get_compiler('cpp').get_id()
 
 if compiler_id == 'clang'
+
 	# Disabled these - not working?
 	#stdlib_compiler_flags += ['-fno-address-santizer', '-fno-memsafety']
 
@@ -38,7 +41,3 @@ elif compiler_id == 'gcc'
 	stdlib_compiler_flags += ['-fno-stack-protector-all']
 
 endif
-
-# TODO: when are these needed?
-# TODO: Can we define a stack protector?
-stdlib_compiler_flags += ['-fno-stack-protector', '-freestanding']
