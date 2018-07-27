@@ -1,0 +1,38 @@
+#
+# Meson Cross-compilation File for GCC ARM Builds
+# Requires that arm-none-eabi-* is found in your PATH
+#
+# For more information: http://mesonbuild.com/Cross-compilation.html
+
+[binaries]
+c = '/usr/local/opt/llvm/bin/clang'
+cpp = '/usr/local/opt/llvm/bin/clang++'
+ar = '/usr/local/opt/llvm/bin/llvm-ar'
+as = '/usr/local/opt/llvm/bin/llvm-as'
+size = '/usr/local/opt/llvm/bin/llvm-size'
+ld = '/usr/local/opt/llvm/bin/llvm-link'
+objdump = '/usr/local/opt/llvm/bin/llvm-objdump'
+objcopy = 'arm-none-eabi-objcopy'
+strip = 'arm-none-eabi-strip'
+
+# Not Used:
+#	pkgconfig
+#	exe_wrapper
+
+[properties]
+c_args = []
+c_link_args = []
+cpp_args = []
+cpp_link_args = []
+
+# TODO: Add our c_stdlib
+# c_stdlib = ['mylibc', 'mylibc_dep'] # Subproject name, dependency name
+
+# Keep this set, or else
+needs_exe_wrapper = false
+
+[host_machine]
+system = 'darwin'
+cpu_family = 'x86_64'
+cpu = 'x86_64'
+endian = 'little'
