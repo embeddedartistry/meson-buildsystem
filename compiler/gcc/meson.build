@@ -32,6 +32,7 @@ gcc_warnings = [
 	'-Wmissing-declarations',
 	'-Woverloaded-virtual',
 	'-Wnoexcept',
+	'-Wstrict-null-sentinel',
 
 	# GCC V5.0 and above
 	'-Wdouble-promotion',
@@ -69,6 +70,15 @@ if gcc_version.version_compare('>=8.0')
 endif
 
 gcc_warnings_disable = [
+
+]
+
+gcc_compiler_optimization_flags = [
+	'-fdevirtualize',
+	'-ffunction-sections',
+]
+
+gcc_linker_optimization_flags = [
 
 ]
 
