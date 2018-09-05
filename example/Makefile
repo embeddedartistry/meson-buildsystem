@@ -67,6 +67,10 @@ purify:
 	$(Q)echo Removing Build Output
 	$(Q)rm -rf $(BUILDRESULTS)/
 
+.PHONY: ccc
+ccc:
+	$(Q)cd $(BUILDRESULTS); ninja complexity
+
 ### Help Rule ###
 .PHONY : help
 help :
@@ -83,9 +87,11 @@ help :
 	@echo "  clean: cleans build artifacts"
 	@echo "  purify: removes the BUILDRESULTS directory"
 	@echo "  docs: Builds documentation"
+	@echo "  test: Run unit tests"
 	@echo "  Code Formating:"
 	@echo "    format: runs clang-format on codebase"
 	@echo "    format-diff: generates a diff file with formatting changes"
 	@echo "    format-check: checks whether formatting needs to be applied"
 	@echo "  Static Analysis:"
 	@echo "    analyze: runs clang static analysis"
+	@echo "	   ccc: runs complexity analysis with lizard"
