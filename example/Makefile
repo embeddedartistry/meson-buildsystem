@@ -60,7 +60,7 @@ list-targets-all: groundwork
 .PHONY: clean
 clean:
 	$(Q)echo Cleaning build artifacts
-	$(Q)cd $(BUILDRESULTS); ninja -t clean
+	$(Q)if [ -d "$(BUILDRESULTS)" ]; then $cd $(BUILDRESULTS); ninja -t clean; fi
 
 .PHONY: purify
 purify:
