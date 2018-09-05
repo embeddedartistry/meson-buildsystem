@@ -1,0 +1,11 @@
+############################
+# Supporting Build Targets #
+############################
+# Add these targets to your top-level meson.build file
+# It should be above the build/ submodule
+
+run_target('complexity',
+	command: ['build/scripts/complexity_check.sh', '-w'])
+
+run_target('complexity-list',
+	command: ['build/scripts/complexity_check.sh'])
