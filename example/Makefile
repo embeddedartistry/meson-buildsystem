@@ -71,6 +71,13 @@ purify:
 ccc:
 	$(Q)cd $(BUILDRESULTS); ninja complexity
 
+.PHONY: test
+test: groundwork
+ifneq ("$(wildcard $(BUILDRESULTS)/test/)","")
+	$(Q)rm -f $(BUILDRESULTS)/test/*.xml
+endif
+	$(Q) cd $(BUILDRESULTS); meson test --print-errorlogs
+
 ### Help Rule ###
 .PHONY : help
 help :
