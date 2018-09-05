@@ -6,4 +6,4 @@ MESON_SOURCE_ROOT=${MESON_SOURCE_ROOT:-./}
 
 cd "${MESON_SOURCE_ROOT}"
 
-lizard --length 75 --CCN 10 --arguments 6 "$@"
+lizard -x "./buildresults/*" --length 75 --CCN 10 --arguments 6 "$@"
