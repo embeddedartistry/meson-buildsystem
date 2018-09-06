@@ -76,6 +76,10 @@ ccc: groundwork
 cppcheck: groundwork
 	$(Q)cd $(BUILDRESULTS); ninja cppcheck
 
+.PHONY: cppcheck-xml
+cppcheck-xml: groundwork
+	$(Q)cd $(BUILDRESULTS); ninja cppcheck-xml
+
 .PHONY: test
 test: groundwork
 ifneq ("$(wildcard $(BUILDRESULTS)/test/)","")
@@ -108,3 +112,4 @@ help :
 	@echo "    analyze: runs clang static analysis"
 	@echo "	   ccc: runs complexity analysis with lizard"
 	@echo "    cppcheck: runs cppcheck"
+	@echo "    cppcheck-xml: runs cppcheck and generates an XML report (for build servers)"
