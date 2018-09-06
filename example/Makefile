@@ -21,9 +21,10 @@ BUILDRESULTS?=buildresults
 
 all: buildall
 
+.PHONY: groundwork
 groundwork:
-	$(Q) mkdir -p $(BUILDRESULTS)
-	$(Q) meson --buildtype plain $(BUILDRESULTS)
+	$(Q)if [ -d "$(BUILDRESULTS)" ]; then mkdir -p $(BUILDRESULTS); fi
+	$(Q)if [ ! -e "$(BUILDRESULTS)/build.ninja" ]; then meson --buildtype plain $(BUILDRESULTS); fi
 
 .PHONY: buildall
 buildall: groundwork
@@ -68,8 +69,12 @@ purify:
 	$(Q)rm -rf $(BUILDRESULTS)/
 
 .PHONY: ccc
-ccc:
+ccc: groundwork
 	$(Q)cd $(BUILDRESULTS); ninja complexity
+
+.PHONY: cppcheck
+cppcheck: groundwork
+	$(Q)cd $(BUILDRESULTS); ninja cppcheck
 
 .PHONY: test
 test: groundwork
@@ -102,3 +107,4 @@ help :
 	@echo "  Static Analysis:"
 	@echo "    analyze: runs clang static analysis"
 	@echo "	   ccc: runs complexity analysis with lizard"
+	@echo "    cppcheck: runs cppcheck"
