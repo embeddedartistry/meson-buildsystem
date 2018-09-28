@@ -52,7 +52,7 @@ if compiler_id == 'clang'
 		# The following flags are required to link and run an app on OSX
 		# See note below
 		# TODO: remove 'lsystem' here
-		stdlib_link_flags += ['-prebind', '-all_load', '-lsystem']
+		stdlib_link_flags += ['-all_load', '-lsystem']
 
 	endif
 
