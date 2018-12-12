@@ -26,12 +26,25 @@ run_target('complexity-list',
 run_target('docs',
 	command: ['build/tooling/doxygen/doxygen.sh', architecture])
 
+# Vale - Document Linting
+
+vale = find_program('vale', required: false)
+if vale.found():
+	run_target('doclint',
+		command: ['vale',
+		'--config',
+		meson.source_root() + '/tools/vale-styleguide/config/documentation.vale.ini',
+		'--glob',
+		'*.md',
+		meson.source_root() + '/docs/',
+		meson.source_root() + '/README.md']
+	)
+endif
+
 # Cppcheck
 
 cppcheck = find_program('cppcheck', required: false)
-
 if cppcheck.found()
-
 	run_target('cppcheck',
 		command: ['cppcheck',
 		# Options
@@ -45,7 +58,6 @@ if cppcheck.found()
 	run_target('cppcheck-xml',
 		command: ['tools/cppcheck_xml.sh']
 	)
-
 endif
 
 # Clang Tidy
