@@ -97,6 +97,10 @@ coverage:
 tidy: groundwork
 	$(Q) cd $(BUILDRESULTS); ninja tidy
 
+.PHONY: doclint
+doclint: groundwork
+	$(Q) cd $(BUILDRESULTS); ninja doclint
+
 ### Help Rule ###
 .PHONY : help
 help :
@@ -113,6 +117,7 @@ help :
 	@echo "  clean: cleans build artifacts"
 	@echo "  purify: removes the BUILDRESULTS directory"
 	@echo "  docs: Builds documentation"
+	@echo "  doclint: Run the documentation linter"
 	@echo "  test: Run unit tests"
 	@echo "  Code Formating:"
 	@echo "    format: runs clang-format on codebase"
