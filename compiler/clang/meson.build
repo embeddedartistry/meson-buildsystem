@@ -18,6 +18,7 @@ clang_warnings_disable = [
 	# causes warnings if you use static values
 	'-Wno-exit-time-destructors',
 	'-Wno-global-constructors',
+	'-Wno-covered-switch-default',
 	# causes warnings about main and statics
 	#'-Wno-exit-time-destructors',
 	# causes warnings from conditional macros that check an undefined value (e.g. #ifdef _WIN32 in linux build)
