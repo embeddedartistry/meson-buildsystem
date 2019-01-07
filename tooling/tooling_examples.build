@@ -48,7 +48,7 @@ if cppcheck.found()
 	run_target('cppcheck',
 		command: ['cppcheck',
 		# Options
-		'--quiet', '--enable=style', '--force',
+		'--quiet', '--enable=style', '--force', '--inline-suppr',
 		# Include Directories
 		'-I', meson.current_source_dir() + '/include',
 		# Source Directories
