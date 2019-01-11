@@ -19,6 +19,8 @@ clang_warnings_disable = [
 	'-Wno-exit-time-destructors',
 	'-Wno-global-constructors',
 	'-Wno-covered-switch-default',
+	# We call main() from our boot sequencer
+	'-Wno-main',
 	# causes warnings about main and statics
 	#'-Wno-exit-time-destructors',
 	# causes warnings from conditional macros that check an undefined value (e.g. #ifdef _WIN32 in linux build)
