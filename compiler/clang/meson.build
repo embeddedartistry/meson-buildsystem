@@ -52,6 +52,10 @@ clang_compiler_optimization_flags = [
 	'-ffunction-sections',
 ]
 
+clang_linker_flags = [
+	'-e_start',
+]
+
 clang_linker_optimization_flags = [
 	# Place each functon in its own section (ELF Only)
 	'-ffunction-sections',
@@ -63,4 +67,8 @@ compiler_args = [
 	clang_warnings,
 	clang_warnings_disable,
 	clang_compiler_flags
+]
+
+linker_args = [
+	clang_linker_flags,
 ]
