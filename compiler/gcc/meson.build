@@ -78,6 +78,10 @@ gcc_compiler_optimization_flags = [
 	'-ffunction-sections',
 ]
 
+gcc_linker_flags = [
+	'-e_start',
+]
+
 gcc_linker_optimization_flags = [
 
 ]
@@ -87,11 +91,14 @@ gcc_linker_optimization_flags = [
 #	'-fstrict-aliasing'
 gcc_compiler_flags = [
 	'-fdiagnostics-show-option',
-
 ]
 
 compiler_args = [
 	gcc_warnings,
 	gcc_warnings_disable,
 	gcc_compiler_flags
+]
+
+linker_args = [
+	gcc_linker_flags,
 ]
