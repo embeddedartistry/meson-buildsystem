@@ -14,10 +14,10 @@ stdlib_compiler_flags = [
 
 cpp_stdlib_compiler_flags = [
 	# Disable standard #include directories for the C++ standard library
+	# This is analagous to -nostlib++
 	'-nostdinc++',
 ]
 
-# TODO: is this ever valid? 	'-nostdlib++',
 stdlib_link_flags = [
 	# Do not use the standard system startup files or libraries when linking.
 	# No startup files and only the libraries you specify are passed to the
@@ -36,19 +36,25 @@ stdlib_link_flags = [
 	'-nostartfiles',
 ]
 
+host_stdlib_compiler_flags = []
+host_stdlib_link_flags = []
+
 if meson.is_cross_build()
 	stdlib_compiler_flags += ['-fPIC', '-ffreestanding']
 endif
 
-compiler_id = meson.get_compiler('cpp').get_id()
+##
+# Check the target machine parameters, to set special flags
+##
 
-if compiler_id == 'clang'
-
-	# Disabled these - not working?
-	#stdlib_compiler_flags += ['-fno-address-santizer', '-fno-memsafety']
+target_compiler_id = meson.get_compiler('cpp').get_id()
+if target_compiler_id == 'clang'
 
 	#  Disable builtin #include directories
-	stdlib_compiler_flags += ['-nobuiltininc']
+	stdlib_compiler_flags += [
+		# We now get an unused argument warning with clang...
+		#'-nobuiltininc'
+	]
 
 	if(host_machine.system() == 'darwin')
 
@@ -56,8 +62,32 @@ if compiler_id == 'clang'
 		# See note below
 		# TODO: remove 'lsystem' here
 		stdlib_link_flags += ['-all_load', '-lsystem']
-
 	endif
+
+endif
+
+##
+# Check the host machine parameters, which will be used to build
+# tooling and programs for the build machine in a cross-compilation scenari
+##
+
+host_compiler_id = meson.get_compiler('cpp', native: true).get_id()
+if host_compiler_id == 'clang'
+
+	#  Disable builtin #include directories
+	host_stdlib_compiler_flags += [
+		# We now get an unused argument warning with clang...
+		# '-nobuiltininc'
+	]
+
+	if(build_machine.system() == 'darwin')
+
+		# The following flags are required to link and run an app on OSX
+		# See note below
+		# TODO: remove 'lsystem' here
+		host_stdlib_link_flags += ['-all_load', '-lsystem']
+	endif
+
 endif
 
 ##
