@@ -5,10 +5,8 @@
 gcc_warnings = [
 	'-Wall',
 	'-Wextra',
-	'-Weffc++',
 	'-pedantic',
 	'-Wconversion',
-	'-Wold-style-cast',
 	'-Wfloat-equal',
 	'-Wlogical-op',
 	'-Wundef',
@@ -23,23 +21,29 @@ gcc_warnings = [
 	'-Wmissing-include-dirs',
 	'-Wcast-align',
 	'-Wswitch-enum',
-	'-Wnon-virtual-dtor',
-	'-Wctor-dtor-privacy',
 	'-Wsign-conversion',
 	'-Wdisabled-optimization',
 	'-Winline',
 	'-Winvalid-pch',
 	'-Wmissing-declarations',
-	'-Woverloaded-virtual',
-	'-Wnoexcept',
-	'-Wstrict-null-sentinel',
 
 	# GCC V5.0 and above
 	'-Wdouble-promotion',
 	'-Wtrampolines',
-	'-Wzero-as-null-pointer-constant',
-	'-Wuseless-cast',
 	'-Wvector-operation-performance',
+]
+
+gcc_cpp_warnings = [
+	'-Weffc++',
+	'-Wold-style-cast',
+	'-Wnon-virtual-dtor',
+	'-Wctor-dtor-privacy',
+	'-Woverloaded-virtual',
+	'-Wnoexcept',
+	'-Wstrict-null-sentinel',
+	# GCC V5.0 and above
+	'-Wuseless-cast',
+	'-Wzero-as-null-pointer-constant',
 ]
 
 gcc_version = meson.get_compiler('cpp').version()
@@ -97,6 +101,10 @@ compiler_args = [
 	gcc_warnings,
 	gcc_warnings_disable,
 	gcc_compiler_flags
+]
+
+cpp_compiler_args = [
+	gcc_cpp_warnings,
 ]
 
 linker_args = [

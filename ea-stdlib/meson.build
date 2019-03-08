@@ -6,15 +6,15 @@
 stdlib_compiler_flags = [
 	'-fno-builtin',
 	'-nodefaultlibs',
-
-	# Disable standard #include directories for the C++ standard library
-	'-nostdinc++',
-
-	#  Disable builtin #include directories
-	'-nobuiltininc',
+	'-nostdinc',
 
 	# TODO: Can we define a stack protector?
 	'-fno-stack-protector',
+]
+
+cpp_stdlib_compiler_flags = [
+	# Disable standard #include directories for the C++ standard library
+	'-nostdinc++',
 ]
 
 # TODO: is this ever valid? 	'-nostdlib++',
@@ -47,6 +47,9 @@ if compiler_id == 'clang'
 	# Disabled these - not working?
 	#stdlib_compiler_flags += ['-fno-address-santizer', '-fno-memsafety']
 
+	#  Disable builtin #include directories
+	stdlib_compiler_flags += ['-nobuiltininc']
+
 	if(host_machine.system() == 'darwin')
 
 		# The following flags are required to link and run an app on OSX
@@ -55,11 +58,6 @@ if compiler_id == 'clang'
 		stdlib_link_flags += ['-all_load', '-lsystem']
 
 	endif
-
-elif compiler_id == 'gcc'
-
-	stdlib_compiler_flags += ['-fno-stack-protector-all']
-
 endif
 
 ##
