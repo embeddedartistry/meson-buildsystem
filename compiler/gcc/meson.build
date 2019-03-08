@@ -26,6 +26,7 @@ gcc_warnings = [
 	'-Winline',
 	'-Winvalid-pch',
 	'-Wmissing-declarations',
+	'-Wno-unknown-pragmas',
 
 	# GCC V5.0 and above
 	'-Wdouble-promotion',
