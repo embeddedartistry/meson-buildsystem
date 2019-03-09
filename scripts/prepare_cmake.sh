@@ -10,5 +10,5 @@ if [ ! -d "$OUTPUT_DIR" ]; then
 fi
 
 if [ ! -f "$OUTPUT_DIR/CMakeCache.txt" ]; then
-	cmake $@
+	cmake -G Ninja -Wno-dev $@
 fi
