@@ -1,7 +1,5 @@
-#
 # Meson Cross-compilation File for GCC ARM Builds
 # Requires that arm-none-eabi-* is found in your PATH
-#
 # For more information: http://mesonbuild.com/Cross-compilation.html
 
 [binaries]
@@ -15,16 +13,9 @@ ld = 'arm-none-eabi-ld'
 #	exe_wrapper
 
 [properties]
-#sizeof_int = 4
-#sizeof_wchar_t = 4
-#sizeof_void* = 4
-#alignment_char = 1
-#alignment_void* = 4
-#alignment_double = 4
-#has_function_printf = false
-c_args = [ '-mcpu=cortex-m4' ]
+c_args = [ '-mcpu=cortex-m4', '-mfloat-abi=hard']
 c_link_args = []
-cpp_args = [ '-mcpu=cortex-m4' ]
+cpp_args = [ '-mcpu=cortex-m4', '-mfloat-abi=hard', '--sysroot=~/toolchain/gcc-arm-none-eabi', '-D_GNU_SOURCE']
 cpp_link_args = []
 
 # TODO: Add our c_stdlib
