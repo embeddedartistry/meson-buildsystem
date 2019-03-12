@@ -69,6 +69,8 @@ compiler_args = [
 	clang_compiler_flags
 ]
 
+cpp_compiler_args = []
+
 linker_args = [
 	clang_linker_flags,
 ]
