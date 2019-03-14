@@ -6,7 +6,7 @@
 stdlib_compiler_flags = [
 	'-fno-builtin',
 	'-nodefaultlibs',
-	'-nostdinc',
+	#'-nostdinc',
 
 	# TODO: Can we define a stack protector?
 	'-fno-stack-protector',
