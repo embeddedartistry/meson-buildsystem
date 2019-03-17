@@ -13,9 +13,9 @@ ld = 'arm-none-eabi-ld'
 #	exe_wrapper
 
 [properties]
-c_args = [ '-mcpu=cortex-m4', '-mfloat-abi=hard']
+c_args = [ '-mcpu=cortex-m4', '-mfloat-abi=hard', '-nostdinc']
 c_link_args = []
-cpp_args = [ '-mcpu=cortex-m4', '-mfloat-abi=hard', '--sysroot=~/toolchain/gcc-arm-none-eabi', '-D_GNU_SOURCE']
+cpp_args = [ '-mcpu=cortex-m4', '-mfloat-abi=hard', '-nostdinc']
 cpp_link_args = []
 
 # TODO: Add our c_stdlib
