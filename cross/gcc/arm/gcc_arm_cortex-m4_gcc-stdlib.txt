@@ -1,0 +1,31 @@
+# Meson Cross-compilation File for GCC ARM Builds
+# Requires that arm-none-eabi-* is found in your PATH
+# For more information: http://mesonbuild.com/Cross-compilation.html
+
+[binaries]
+c = 'arm-none-eabi-gcc'
+cpp = 'arm-none-eabi-c++'
+ar = 'arm-none-eabi-ar'
+strip = 'arm-none-eabi-strip'
+ld = 'arm-none-eabi-ld'
+# Not Used:
+#	pkgconfig
+#	exe_wrapper
+
+[properties]
+c_args = [ '-mcpu=cortex-m4', '-mfloat-abi=hard']
+c_link_args = []
+cpp_args = [ '-mcpu=cortex-m4', '-mfloat-abi=hard', '--sysroot=~/toolchain/gcc-arm-none-eabi', '-D_GNU_SOURCE']
+cpp_link_args = []
+
+# TODO: Add our c_stdlib
+# c_stdlib = ['mylibc', 'mylibc_dep'] # Subproject name, dependency name
+
+# Keep this set, or else
+needs_exe_wrapper = true
+
+[host_machine]
+system = 'none'
+cpu_family = 'arm'
+cpu = 'cortex-m4'
+endian = 'little'
