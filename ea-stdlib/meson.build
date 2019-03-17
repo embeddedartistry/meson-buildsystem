@@ -16,6 +16,8 @@ cpp_stdlib_compiler_flags = [
 	# Disable standard #include directories for the C++ standard library
 	# This is analagous to -nostlib++
 	'-nostdinc++',
+	# C++ STL needs GNU functions. Not-so-standard, are we?
+	'-D_GNU_SOURCE',
 ]
 
 stdlib_link_flags = [
