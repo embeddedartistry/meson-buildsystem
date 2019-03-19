@@ -18,10 +18,7 @@ c_link_args = []
 cpp_args = [ '-mcpu=cortex-m4', '-mfloat-abi=hard', '--sysroot=~/toolchain/gcc-arm-none-eabi', '-D_GNU_SOURCE']
 cpp_link_args = []
 
-# TODO: Add our c_stdlib
-# c_stdlib = ['mylibc', 'mylibc_dep'] # Subproject name, dependency name
-
-# Keep this set, or else
+# Keep this set, or the sanity check won't pass
 needs_exe_wrapper = true
 
 [host_machine]

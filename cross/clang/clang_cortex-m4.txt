@@ -1,8 +1,4 @@
-#
-# Meson Cross-compilation File for GCC ARM Builds
-# Requires that arm-none-eabi-* is found in your PATH
-#
-# For more information: http://mesonbuild.com/Cross-compilation.html
+# Compile code for OS X using Homebrew Clang (x86_64 variant)
 
 [binaries]
 c = '/usr/local/opt/llvm/bin/clang'
@@ -20,19 +16,16 @@ strip = 'arm-none-eabi-strip'
 #	exe_wrapper
 
 [properties]
-c_args = []
+c_args = ['--target=arm-none-eabi', '-march=armv7', '-mcpu=cortex-m4', '-mfloat-abi=hard']
 c_link_args = []
-cpp_args = []
+cpp_args = ['--target=arm-none-eabi', '-march=armv7', '-mcpu=cortex-m4', '-mfloat-abi=hard']
 cpp_link_args = []
 
-# TODO: Add our c_stdlib
-# c_stdlib = ['mylibc', 'mylibc_dep'] # Subproject name, dependency name
-
-# Keep this set, or else
-needs_exe_wrapper = false
+# Keep this set, or the sanity check won't pass
+needs_exe_wrapper = true
 
 [host_machine]
-system = 'darwin'
-cpu_family = 'x86_64'
-cpu = 'x86_64'
+system = 'none'
+cpu_family = 'arm'
+cpu = 'cortex-m4'
 endian = 'little'
