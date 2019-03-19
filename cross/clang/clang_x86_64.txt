@@ -1,8 +1,4 @@
-#
-# Meson Cross-compilation File for GCC ARM Builds
-# Requires that arm-none-eabi-* is found in your PATH
-#
-# For more information: http://mesonbuild.com/Cross-compilation.html
+# Compile code for OS X using Homebrew Clang (x86_64 variant)
 
 [binaries]
 c = '/usr/local/opt/llvm/bin/clang'
@@ -24,11 +20,6 @@ c_args = []
 c_link_args = []
 cpp_args = []
 cpp_link_args = []
-
-# TODO: Add our c_stdlib
-# c_stdlib = ['mylibc', 'mylibc_dep'] # Subproject name, dependency name
-
-# Keep this set, or else
 needs_exe_wrapper = false
 
 [host_machine]
