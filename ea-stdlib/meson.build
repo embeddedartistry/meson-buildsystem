@@ -42,7 +42,12 @@ host_stdlib_compiler_flags = []
 host_stdlib_link_flags = []
 
 if meson.is_cross_build()
-	stdlib_compiler_flags += ['-fPIC', '-ffreestanding']
+	stdlib_compiler_flags += [
+		'-fPIC',
+		'-ffreestanding',
+		# Baremetal programs will not need to call exit() or exit-time static destructors
+		'-fno-use-cxa-atexit',
+	]
 endif
 
 ##
@@ -91,6 +96,7 @@ if host_compiler_id == 'clang'
 	endif
 
 endif
+
 
 ##
 # Note on all_load flags for Apple clang
