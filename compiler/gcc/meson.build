@@ -79,29 +79,50 @@ gcc_warnings_disable = [
 ]
 
 gcc_compiler_optimization_flags = [
+	# Attempt to convert calls to virtual functions to direct calls
 	'-fdevirtualize',
+	#'-fdevirtualize-speculatively',
+	# Place each functon in its own section (ELF Only)
 	'-ffunction-sections',
+	# Place each data in its own section (ELF Only)
+	'-fdata-sections',
+	#'-fshort-enums',
+	#'-flto',
+	# The difference between fat and non-fat object files is that fat object files contains
+	# both intermediate language as well as the normally compiled code.
+	# At linktime, if you invoke compiler without -flto, fat objects will be handled as normal
+	# object files (and LTO information discarded), while slim objects will invoke LTO optimizers
+	# because there is no way to handle them without it.
+	# If you both compile and link with -flto, both fat and slim objects ought to give you the
+	# same binary, just slim objects will be smaller and faster to compile, because you will avoid
+	# the redundant code generation.
+	#'-ffat-lto-objects',
 ]
 
 gcc_linker_flags = [
-	'-e_start',
+	#'-e_start',
 ]
 
 gcc_linker_optimization_flags = [
-
+	'-Wl,--gc-sections',
+	#'-flto',
+	#'-fuse-linker-plugin'
 ]
 
 # Not enabled:
 # 	'-fvisibility=hidden'
 #	'-fstrict-aliasing'
 gcc_compiler_flags = [
+	# Some gcc builds include C++ headers with an extern C around them... causing errors.
+	'-DNO_IMPLICIT_EXTERN_C=1',
 	'-fdiagnostics-show-option',
 ]
 
 compiler_args = [
 	gcc_warnings,
 	gcc_warnings_disable,
-	gcc_compiler_flags
+	gcc_compiler_flags,
+	gcc_compiler_optimization_flags
 ]
 
 cpp_compiler_args = [
@@ -110,4 +131,5 @@ cpp_compiler_args = [
 
 linker_args = [
 	gcc_linker_flags,
+	gcc_linker_optimization_flags
 ]

@@ -49,7 +49,14 @@ clang_compiler_runtime_debug_flags = [
 ]
 
 clang_compiler_optimization_flags = [
+	# Attempt to convert calls to virtual functions to direct calls
+	'-fdevirtualize',
+	#-fdevirtualize-speculatively
+	# Place each functon in its own section (ELF Only)
 	'-ffunction-sections',
+	# Place each data in its own section (ELF Only)
+	'-fdata-sections',
+	#'-fshort-enums',
 ]
 
 clang_linker_flags = [
@@ -57,10 +64,7 @@ clang_linker_flags = [
 ]
 
 clang_linker_optimization_flags = [
-	# Place each functon in its own section (ELF Only)
-	'-ffunction-sections',
-	# Place each data in its own section (ELF Only)
-	'-fdata-sections',
+	'-Wl,--gc-sections',
 ]
 
 compiler_args = [
