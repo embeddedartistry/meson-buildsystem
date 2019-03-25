@@ -16,9 +16,9 @@ ld = 'arm-none-eabi-ld'
 #   objcopy
 
 [properties]
-c_args = [ '-mcpu=cortex-m4', '-mfloat-abi=hard']
+c_args = [ '-mcpu=cortex-m4', '-mfloat-abi=hard', '-mfpu=vfpv4']
 c_link_args = []
-cpp_args = [ '-mcpu=cortex-m4', '-mfloat-abi=hard']
+cpp_args = [ '-mcpu=cortex-m4', '-mfloat-abi=hard', '-mfpu=vfpv4']
 cpp_link_args = []
 
 # Keep this set, or the sanity check won't pass
