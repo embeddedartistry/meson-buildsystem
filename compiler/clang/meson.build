@@ -38,7 +38,8 @@ clang_compiler_flags = [
 
 clang_compiler_cpp_flags = []
 
-if meson.is_cross_build()
+# If we are building native applications with clang, we don't want these flags
+if meson.is_cross_build() and target_compiler_id == 'clang'
 	clang_compiler_flags += [
 		# Baremetal programs will not need to call exit() or exit-time static destructors
 		'-fPIC',

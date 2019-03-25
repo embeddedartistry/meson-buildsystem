@@ -5,7 +5,7 @@
 gcc_warnings = [
 	'-Wall',
 	'-Wextra',
-	'-pedantic',
+	#'-pedantic',
 	'-Wconversion',
 	'-Wfloat-equal',
 	'-Wlogical-op',
@@ -120,7 +120,8 @@ gcc_compiler_flags = [
 
 gcc_compiler_cpp_flags = []
 
-if meson.is_cross_build()
+# If we are building native applications with gcc, we don't want these flags
+if meson.is_cross_build() and target_compiler_id == 'gcc'
 	# Baremetal programs will not need to call exit() or exit-time static destructors
 	gcc_compiler_flags += [
 		# Baremetal programs will not need to call exit() or exit-time static destructors
