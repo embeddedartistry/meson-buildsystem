@@ -1,19 +1,29 @@
 native_compiler_id = meson.get_compiler('c', native : true).get_id()
 
-if meson.is_cross_build()
-	host_compiler_id = meson.get_compiler('c', native : false).get_id()
-endif
+subdir(native_compiler_id)
+native_compiler_args = compiler_args
+native_cpp_compiler_args = cpp_compiler_args
+native_linker_args = linker_args
 
 if meson.is_cross_build()
-	if host_compiler_id == 'clang'
-		subdir('clang')
-	elif host_compiler_id == 'gcc'
-		subdir('gcc')
+
+	target_compiler_id = meson.get_compiler('c', native : false).get_id()
+
+	if target_compiler_id == target_compiler_id
+		target_compiler_args = native_cpp_compiler_args
+		target_cpp_compiler_args = native_cpp_compiler_args
+		target_linker_args = native_linker_args
+	else
+		subdir(target_compiler_id)
+		target_compiler_args = compiler_args
+		target_cpp_compiler_args = cpp_compiler_args
+		target_linker_args = linker_args
 	endif
+
 else
-	if native_compiler_id == 'clang'
-		subdir('clang')
-	elif native_compiler_id == 'gcc'
-		subdir('gcc')
-	endif
+
+	target_compiler_args = compiler_args
+	target_cpp_compiler_args = cpp_compiler_args
+	target_linker_args = linker_args
+
 endif
