@@ -38,8 +38,8 @@ stdlib_link_flags = [
 	'-nostartfiles',
 ]
 
-host_stdlib_compiler_flags = []
-host_stdlib_link_flags = []
+native_stdlib_compiler_flags = []
+native_stdlib_link_flags = []
 
 ##
 # Check the target machine parameters, to set special flags
@@ -69,11 +69,11 @@ endif
 # tooling and programs for the build machine in a cross-compilation scenari
 ##
 
-host_compiler_id = meson.get_compiler('cpp', native: true).get_id()
-if host_compiler_id == 'clang'
+native_compiler_id = meson.get_compiler('cpp', native: true).get_id()
+if native_compiler_id == 'clang'
 
 	#  Disable builtin #include directories
-	host_stdlib_compiler_flags += [
+	native_stdlib_compiler_flags += [
 		# We now get an unused argument warning with clang...
 		# '-nobuiltininc'
 	]
@@ -83,7 +83,7 @@ if host_compiler_id == 'clang'
 		# The following flags are required to link and run an app on OSX
 		# See note below
 		# TODO: remove 'lsystem' here
-		host_stdlib_link_flags += ['-all_load', '-lsystem']
+		native_stdlib_link_flags += ['-all_load', '-lsystem']
 	endif
 
 endif
