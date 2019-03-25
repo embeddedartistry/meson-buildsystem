@@ -13,9 +13,9 @@ ld = 'arm-none-eabi-ld'
 #	exe_wrapper
 
 [properties]
-c_args = [ '-mcpu=cortex-m4', '-mfloat-abi=hard']
+c_args = [ '-mcpu=cortex-m4', '-mfloat-abi=hard', '-mfpu=vfpv4']
 c_link_args = []
-cpp_args = [ '-mcpu=cortex-m4', '-mfloat-abi=hard', '--sysroot=~/toolchain/gcc-arm-none-eabi', '-D_GNU_SOURCE']
+cpp_args = [ '-mcpu=cortex-m4', '-mfloat-abi=hard', '--sysroot=~/toolchain/gcc-arm-none-eabi', '-D_GNU_SOURCE', '-mfpu=vfpv4']
 cpp_link_args = []
 
 # Keep this set, or the sanity check won't pass
