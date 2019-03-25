@@ -1,5 +1,5 @@
 native_compiler_id = meson.get_compiler('c', native : true).get_id()
-target_compiler_id = meson.get_compiler('c', native : false).get_id()
+target_compiler_id = ''
 
 message('Supplying default flags for native compiler: ' + native_compiler_id)
 subdir(native_compiler_id)
@@ -8,6 +8,7 @@ native_cpp_compiler_args = cpp_compiler_args
 native_linker_args = linker_args
 
 if meson.is_cross_build()
+	target_compiler_id = meson.get_compiler('c', native : false).get_id()
 
 	if target_compiler_id == native_compiler_id
 		message('Using same flags for target and native compiler')
