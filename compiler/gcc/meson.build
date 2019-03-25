@@ -5,7 +5,6 @@
 gcc_warnings = [
 	'-Wall',
 	'-Wextra',
-	#'-pedantic',
 	'-Wconversion',
 	'-Wfloat-equal',
 	'-Wlogical-op',
