@@ -74,7 +74,6 @@ clang_compiler_optimization_flags = [
 ]
 
 clang_linker_flags = [
-	'-e_start',
 ]
 
 clang_linker_optimization_flags = [
