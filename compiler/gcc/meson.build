@@ -118,13 +118,18 @@ gcc_compiler_flags = [
 	'-fdiagnostics-show-option',
 ]
 
+gcc_compiler_cpp_flags = []
+
 if meson.is_cross_build()
 	# Baremetal programs will not need to call exit() or exit-time static destructors
 	gcc_compiler_flags += [
 		# Baremetal programs will not need to call exit() or exit-time static destructors
-		'-fno-use-cxa-atexit',
 		'-fPIC',
 		'-ffreestanding',
+	]
+
+	gcc_compiler_cpp_flags += [
+		'-fno-use-cxa-atexit',
 	]
 endif
 
@@ -137,6 +142,7 @@ compiler_args = [
 
 cpp_compiler_args = [
 	gcc_cpp_warnings,
+	gcc_compiler_cpp_flags
 ]
 
 linker_args = [
