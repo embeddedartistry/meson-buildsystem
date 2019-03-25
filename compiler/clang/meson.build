@@ -4,10 +4,8 @@
 ###############
 
 clang_warnings = [
-	'-pedantic',
-	'-Weverything'
+	'-Weverything',
 ]
-# Is this needed? '-Qunused-arguments'
 
 # We don't support C++98
 # We don't mind padding being added
@@ -21,17 +19,8 @@ clang_warnings_disable = [
 	'-Wno-covered-switch-default',
 	# We call main() from our boot sequencer
 	'-Wno-main',
-	# causes warnings about main and statics
-	#'-Wno-exit-time-destructors',
-	# causes warnings from conditional macros that check an undefined value (e.g. #ifdef _WIN32 in linux build)
-	#'-Wno-unused-macros',
-	# similar to above, but complains about their lack of definition
-	#'-Wno-undef',
 ]
 
-# Not enabled:
-# 	'-fvisibility=hidden'
-#	'-fstrict-aliasing'
 clang_compiler_flags = [
 	'-fcolor-diagnostics'
 ]
@@ -78,9 +67,12 @@ clang_linker_optimization_flags = [
 	'-Wl,-dead_strip',
 ]
 
-compiler_args = [
+compiler_warnings = [
 	clang_warnings,
 	clang_warnings_disable,
+]
+
+compiler_args = [
 	clang_compiler_flags
 ]
 
