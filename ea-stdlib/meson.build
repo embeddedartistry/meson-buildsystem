@@ -41,15 +41,6 @@ stdlib_link_flags = [
 host_stdlib_compiler_flags = []
 host_stdlib_link_flags = []
 
-if meson.is_cross_build()
-	stdlib_compiler_flags += [
-		'-fPIC',
-		'-ffreestanding',
-		# Baremetal programs will not need to call exit() or exit-time static destructors
-		'-fno-use-cxa-atexit',
-	]
-endif
-
 ##
 # Check the target machine parameters, to set special flags
 ##

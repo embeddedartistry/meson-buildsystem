@@ -36,6 +36,15 @@ clang_compiler_flags = [
 	'-fcolor-diagnostics'
 ]
 
+if meson.is_cross_build()
+	clang_compiler_flags += [
+		# Baremetal programs will not need to call exit() or exit-time static destructors
+		'-fno-use-cxa-atexit',
+		'-fPIC',
+		'-ffreestanding',
+	]
+endif
+
 clang_compiler_debug_flags = [
 	# Dump the layouts of all vtables that will be emitted in a translation unit
 	'-fdump-vtable-layouts',
