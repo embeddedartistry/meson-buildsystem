@@ -1,0 +1,166 @@
+#!groovy
+@Library('jenkins-pipeline-lib') _
+
+pipeline
+{
+  agent any
+  environment
+  {
+    GIT_CHANGE_LOG = gitChangeLog(currentBuild.changeSets)
+    REPORT_CI_TOKEN = credentials('Report-ci-token')
+  }
+  stages
+  {
+    stage('Setup')
+    {
+      steps
+      {
+        setGithubStatus('continuous-integration/jenkins/libc', 'Libc CI Build Started', 'PENDING')
+        reportciNotify("libc CI Build")
+      }
+    }
+    stage('Clean')
+    {
+      when
+      {
+        expression
+        {
+          /*
+          * If the previous build suceeeded (unstable means test failed but build passed)
+          * then we continue on in CI mode. If the previous build failed we want to
+          * start with a clean environment. This is done to reduce manual user interation.
+          */
+          return !(didLastBuildSucceed())
+        }
+      }
+      steps
+      {
+        echo('Previous build failed: Running a clean build.')
+        sh 'make purify'
+      }
+    }
+    stage('Build')
+    {
+      steps
+      {
+        sh 'make'
+      }
+      post
+      {
+        always
+        {
+          warnings categoriesPattern: '', consoleParsers: [[parserName: 'Clang (LLVM based)']], defaultEncoding: '', excludePattern: '**/buildresults/**, **/printf/**, **/openlibm/**', failedNewAll: '15', failedTotalAll: '20', healthy: '', includePattern: '', messagesPattern: '', unHealthy: '', unstableNewAll: '15', unstableTotalAll: '15', useStableBuildAsReference: true
+        }
+      }
+    }
+    stage('Cross compile for ARM')
+    {
+      steps
+      {
+        sh 'meson buildresults/arm/ --cross-file build/cross/gcc/arm/nrf52840.txt'
+        sh 'ninja -C buildresults/arm/'
+      }
+    }
+    stage('Test')
+    {
+      steps
+      {
+        sh 'make test'
+      }
+      post
+      {
+        always
+        {
+          // Report Tests
+          junit 'buildresults/test/*.xml'
+          // Report Tests to Report CI
+          reportciUpload('buildresults/test/*.xml','cmocka')
+        }
+      }
+    }
+    stage('CppCheck')
+    {
+      steps
+      {
+        sh 'make cppcheck-xml'
+      }
+      post
+      {
+        always
+        {
+          publishCppcheck healthy: '5', newFailureThreshold: '5', newThreshold: '1', pattern: '**/cppcheck.xml', threshold: '150', unHealthy: '200'
+        }
+      }
+    }
+    stage('Clang Tidy')
+    {
+      steps
+      {
+        sh 'make tidy'
+      }
+    }
+    stage('Coverage')
+    {
+      steps
+      {
+        sh 'make coverage'
+      }
+      post
+      {
+        success
+        {
+          cobertura autoUpdateHealth: false, autoUpdateStability: false, coberturaReportFile: 'buildresults-coverage/meson-logs/coverage.xml', onlyStable: false, sourceEncoding: 'ASCII', zoomCoverageChart: false
+        }
+      }
+    }
+    stage('Documentation')
+    {
+      steps
+      {
+        sh 'make docs'
+      }
+    }
+    stage('Format')
+    {
+      steps
+      {
+        clangFormat()
+      }
+    }
+    stage('ScanWorkspace')
+    {
+      steps
+      {
+        // Scan workspace to check open tasks
+        openTasks(defaultEncoding: '', excludePattern: 'buildresults/**', healthy: '', high: 'FIXME, FIX', ignoreCase: true, low: '', normal: 'TODO', pattern: '**/*.c, **/*.h, **/*.cpp, **/*.hpp, *.lua **/*.sh', unHealthy: '')
+      }
+    }
+  }
+  post
+  {
+    success
+    {
+      setGithubStatus('continuous-integration/jenkins/example', 'Example CI Build Successful', 'SUCCESS')
+    }
+    failure
+    {
+      setGithubStatus('continuous-integration/jenkins/example', 'Example CI Build Failed', 'FAILURE')
+    }
+    unstable
+    {
+      // Unstable occurs when there are failing tests
+      setGithubStatus('continuous-integration/jenkins/example', 'Example CI build has test or warning failures', 'FAILURE')
+    }
+    aborted
+    {
+      echo "Build manually aborted on Jenkins"
+      slackNotify('ABORTED')
+      setGithubStatus('continuous-integration/jenkins/example', 'Example CI Build Aborted', 'ERROR')
+      reportciCancel()
+    }
+    always
+    {
+      slackNotify(currentBuild.currentResult)
+    }
+  }
+}
