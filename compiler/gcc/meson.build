@@ -70,6 +70,7 @@ if gcc_version.version_compare('>=8.0')
 	gcc_warnings += [
 		# GCC V8.0 and above
 		'-Wcast-align=strict',
+		'-Wextra-semi',
 	]
 endif
 
