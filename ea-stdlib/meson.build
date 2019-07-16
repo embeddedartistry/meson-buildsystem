@@ -72,10 +72,6 @@ endif
 native_compiler_id = meson.get_compiler('cpp', native: true).get_id()
 if native_compiler_id == 'clang'
 
-	native_stdlib_compiler_flags +=
-	[
-	]
-
 	if(build_machine.system() == 'darwin')
 		# The following flags are required to link and run an app on OSX
 		native_stdlib_link_flags += ['-all_load', '-lSystem']
@@ -85,10 +81,6 @@ if native_compiler_id == 'clang'
 	endif
 
 elif native_compiler_id == 'gcc'
-
-	native_stdlib_compiler_flags +=
-	[
-	]
 
 	if(build_machine.system() == 'darwin')
 		# The following flags are required to link and run an app on OSX
