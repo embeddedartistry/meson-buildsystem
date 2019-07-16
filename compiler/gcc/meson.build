@@ -100,7 +100,8 @@ gcc_compiler_optimization_flags = [
 ]
 
 gcc_linker_flags = [
-	#'-e_start',
+	'-e_start',
+	'-no-pie',
 ]
 
 gcc_linker_optimization_flags = [
