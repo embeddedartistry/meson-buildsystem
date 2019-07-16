@@ -72,20 +72,31 @@ endif
 native_compiler_id = meson.get_compiler('cpp', native: true).get_id()
 if native_compiler_id == 'clang'
 
-	#  Disable builtin #include directories
-	native_stdlib_compiler_flags += [
-		# We now get an unused argument warning with clang...
-		# '-nobuiltininc'
+	native_stdlib_compiler_flags +=
+	[
 	]
 
 	if(build_machine.system() == 'darwin')
-
 		# The following flags are required to link and run an app on OSX
-		# See note below
-		# TODO: remove 'lsystem' here
 		native_stdlib_link_flags += ['-all_load', '-lSystem']
+	elif(build_machine.system() == 'linux')
+		# The following flags are required to link and run an app on Linux (with native hosted libc)
+		native_stdlib_link_flags += ['-lc']
 	endif
 
+elif native_compiler_id == 'gcc'
+
+	native_stdlib_compiler_flags +=
+	[
+	]
+
+	if(build_machine.system() == 'darwin')
+		# The following flags are required to link and run an app on OSX
+		native_stdlib_link_flags += ['-lSystem']
+	elif(build_machine.system() == 'linux')
+		# The following flags are required to link and run an app on Linux (with native hosted libc)
+		native_stdlib_link_flags += ['-lc']
+	endif
 endif
 
 
