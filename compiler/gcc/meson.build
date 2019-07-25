@@ -50,7 +50,6 @@ gcc_version = meson.get_compiler('cpp').version()
 
 if gcc_version.version_compare('>=6.0')
 	gcc_warnings += [
-		# GCC V6.0 and above
 		'-Wshift-overflow=2',
 		'-Wnull-dereference',
 		'-Wduplicated-cond',
@@ -59,7 +58,6 @@ endif
 
 if gcc_version.version_compare('>=7.0')
 	gcc_warnings += [
-		# GCC V7.0 and above
 		'-Walloc-zero',
 		'-Walloca',
 		'-Wduplicated-branches',
@@ -68,8 +66,10 @@ endif
 
 if gcc_version.version_compare('>=8.0')
 	gcc_warnings += [
-		# GCC V8.0 and above
 		'-Wcast-align=strict',
+	]
+
+	gcc_cpp_warnings += [
 		'-Wextra-semi',
 	]
 endif
