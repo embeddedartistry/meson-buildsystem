@@ -1,0 +1,21 @@
+# Meson Cross-compilation File for Native GCC Builds on OS X using Homebrew
+# For more information: http://mesonbuild.com/Cross-compilation.html
+
+[binaries]
+c = '/usr/local/opt/gcc/bin/gcc-9'
+cpp = '/usr/local/opt/gcc/bin/g++-9'
+ar = '/usr/local/opt/gcc/bin/gcc-ar-9'
+ld = '/usr/bin/ld'
+strip = '/usr/bin/strip'
+
+[properties]
+c_args = ['-isysroot','/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk']
+c_link_args = ['-isysroot','/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk']
+cpp_args = ['-isysroot','/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk']
+cpp_link_args = ['-isysroot','/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk']
+
+[host_machine]
+system = 'compiler-check'
+cpu_family = 'x86_64'
+cpu = 'x86_64'
+endian = 'little'
