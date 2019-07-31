@@ -166,7 +166,7 @@ else
 	]
 endif
 
-if host_machine.system() == 'darwin' or host_machine.system() == 'compiler-check'
+if host_machine.system() == 'darwin'
 	linker_target_args += [
 		'-Wl,-dead_strip'
 	]
