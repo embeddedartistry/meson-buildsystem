@@ -18,7 +18,7 @@ gcc_warnings = [
 	'-Wundef',
 	'-Wredundant-decls',
 	'-Wshadow',
-	'-Wstrict-overflow=5',
+	'-Wstrict-overflow=2',
 	'-Wwrite-strings',
 	'-Wpointer-arith',
 	'-Wcast-qual',
