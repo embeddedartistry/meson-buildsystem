@@ -85,9 +85,6 @@ gcc_warnings_disable = [
 ]
 
 gcc_compiler_optimization_flags = [
-	# Attempt to convert calls to virtual functions to direct calls
-	'-fdevirtualize',
-	#'-fdevirtualize-speculatively',
 	# Place each functon in its own section (ELF Only)
 	'-ffunction-sections',
 	# Place each data in its own section (ELF Only)
@@ -119,7 +116,11 @@ gcc_compiler_flags = [
 	'-fdiagnostics-show-option',
 ]
 
-gcc_compiler_cpp_flags = []
+gcc_compiler_cpp_flags = [
+	# Attempt to convert calls to virtual functions to direct calls
+	'-fdevirtualize',
+	#'-fdevirtualize-speculatively',
+]
 
 # If we are building native applications with gcc, we don't want these flags
 if meson.is_cross_build() and target_compiler_id == 'gcc'
