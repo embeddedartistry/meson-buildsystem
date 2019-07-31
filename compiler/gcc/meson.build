@@ -1,3 +1,10 @@
+compiler_native_args = []
+compiler_target_args = []
+cpp_compiler_native_args = []
+cpp_compiler_target_args = []
+linker_native_args = []
+linker_target_args = []
+
 #############
 # GCC Flags #
 #############
@@ -100,18 +107,13 @@ gcc_compiler_optimization_flags = [
 ]
 
 gcc_linker_flags = [
-	'-no-pie',
 ]
 
 gcc_linker_optimization_flags = [
-	'-Wl,--gc-sections',
 	#'-flto',
 	#'-fuse-linker-plugin'
 ]
 
-# Not enabled:
-# 	'-fvisibility=hidden'
-#	'-fstrict-aliasing'
 gcc_compiler_flags = [
 	# Some gcc builds include C++ headers with an extern C around them... causing errors.
 	'-DNO_IMPLICIT_EXTERN_C=1',
@@ -134,16 +136,62 @@ if meson.is_cross_build() and target_compiler_id == 'gcc'
 	]
 endif
 
+################################
+# Decide whether to use no-pie #
+################################
+
+if build_machine.system() == 'linux'
+	linker_native_args += [
+		'-no-pie',
+	]
+endif
+
+if host_machine.system() == 'linux'
+	linker_target_args += [
+		'-no-pie',
+	]
+endif
+
+#######################################
+# Decide on dead_strip vs gc-sections #
+#######################################
+
+if build_machine.system() == 'darwin'
+	linker_native_args += [
+		'-Wl,-dead_strip'
+	]
+else
+	linker_native_args += [
+		'-Wl,--gc-sections'
+	]
+endif
+
+if host_machine.system() == 'darwin' or host_machine.system() == 'compiler-check'
+	linker_target_args += [
+		'-Wl,-dead_strip'
+	]
+else
+	linker_target_args += [
+		'-Wl,--gc-sections'
+	]
+endif
+
 compiler_args = [
-	gcc_warnings,
-	gcc_warnings_disable,
 	gcc_compiler_flags,
 	gcc_compiler_optimization_flags
 ]
 
+compiler_warnings = [
+	gcc_warnings,
+	gcc_warnings_disable,
+]
+
 cpp_compiler_args = [
-	gcc_cpp_warnings,
 	gcc_compiler_cpp_flags
+]
+
+cpp_compiler_warnings = [
+	gcc_cpp_warnings
 ]
 
 linker_args = [

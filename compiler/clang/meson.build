@@ -1,10 +1,18 @@
+compiler_native_args = []
+compiler_target_args = []
+cpp_compiler_native_args = []
+cpp_compiler_target_args = []
+linker_native_args = []
+linker_target_args = []
 
 ###############
 # Clang Flags #
 ###############
 
 clang_warnings = [
-	'-Weverything',
+	'-Wall',
+	'-Wextra',
+	#'-Weverything'
 ]
 
 # We don't support C++98
@@ -79,6 +87,8 @@ compiler_args = [
 cpp_compiler_args = [
 	clang_compiler_cpp_flags
 ]
+
+cpp_compiler_warnings = []
 
 linker_args = [
 	clang_linker_flags,
