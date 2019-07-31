@@ -15,7 +15,7 @@ cpp_args = ['-isysroot','/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sd
 cpp_link_args = ['-isysroot','/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk']
 
 [host_machine]
-system = 'compiler-check'
+system = 'darwin'
 cpu_family = 'x86_64'
-cpu = 'x86_64'
+cpu = 'generic'
 endian = 'little'
