@@ -12,7 +12,6 @@ linker_target_args = []
 gcc_warnings = [
 	'-Wall',
 	'-Wextra',
-	'-Wconversion',
 	'-Wfloat-equal',
 	'-Wlogical-op',
 	'-Wundef',
