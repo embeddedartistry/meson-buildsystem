@@ -22,7 +22,6 @@ gcc_warnings = [
 	'-Wpointer-arith',
 	'-Wcast-qual',
 	'-Wformat=2',
-	'-Wswitch-default',
 	'-Wmissing-include-dirs',
 	'-Wcast-align',
 	'-Wswitch-enum',
