@@ -39,7 +39,9 @@ gcc_warnings = [
 ]
 
 gcc_cpp_warnings = [
-	'-Weffc++',
+	# -Weffc++ is disabled for now... it's primarily style and triggering non-relevant warnings
+	# that we aren't going to fix
+	# '-Weffc++',
 	'-Wold-style-cast',
 	'-Wnon-virtual-dtor',
 	'-Wctor-dtor-privacy',
