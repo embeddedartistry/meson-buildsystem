@@ -19,7 +19,7 @@ c_args = [ '-mcpu=cortex-m4', '-mfloat-abi=hard', '-mfpu=fpv4-sp-d16', '-mabi=aa
 c_link_args = [ '-mcpu=cortex-m4', '-mfloat-abi=hard', '-mfpu=fpv4-sp-d16', '-mabi=aapcs', '-mthumb',]
 cpp_args = [ '-mcpu=cortex-m4', '-mfloat-abi=hard', '-mfpu=fpv4-sp-d16', '-mabi=aapcs', '-mthumb',]
 cpp_link_args = [ '-mcpu=cortex-m4', '-mfloat-abi=hard', '-mfpu=fpv4-sp-d16', '-mabi=aapcs', '-mthumb',]
-objcopy = 'arm-none-eabi-objcopy'
+objcopy = ['arm-none-eabi-objcopy']
 
 # Keep this set, or the sanity check won't pass
 needs_exe_wrapper = true
