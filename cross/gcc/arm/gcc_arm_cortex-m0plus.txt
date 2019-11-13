@@ -1,0 +1,31 @@
+# Meson Cross-compilation File for GCC ARM Builds
+# Requires that arm-none-eabi-* is found in your PATH
+# For more information: http://mesonbuild.com/Cross-compilation.html
+
+[binaries]
+c = 'arm-none-eabi-gcc'
+cpp = 'arm-none-eabi-c++'
+ar = 'arm-none-eabi-ar'
+strip = 'arm-none-eabi-strip'
+ld = 'arm-none-eabi-ld'
+
+# Not Used:
+#	pkgconfig
+#	exe_wrapper
+#   objdump
+#   objcopy
+
+[properties]
+c_args = [ '-mcpu=cortex-m0plus']
+c_link_args = []
+cpp_args = [ '-mcpu=cortex-m0plus']
+cpp_link_args = []
+
+# Keep this set, or the sanity check won't pass
+needs_exe_wrapper = true
+
+[host_machine]
+system = 'none'
+cpu_family = 'arm'
+cpu = 'cortex-m0plus'
+endian = 'little'
