@@ -13,6 +13,8 @@
 # This particular approach is slower, this ensures consistency of archives of source files
 # Even across commits.
 
+cd ${MESON_SOURCE_ROOT}
+
 rev=HEAD
 for f in $(git ls-tree -r -t --full-name --name-only "$rev") ; do
     touch -d $(git log --pretty=format:%cI -1 "$rev" -- "$f") "$f";
