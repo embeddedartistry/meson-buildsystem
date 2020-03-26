@@ -12,6 +12,6 @@
 # This is because timestamps get saved. So we overwrite them.
 # Other archive formats may also benefit from a deterministic timestamp method.
 
-find ${MESON_SOURCE_ROOT}/src -exec echo `git ls-files -z ${MESON_SOURCE_ROOT}/src | \
+find ${MESON_SOURCE_ROOT} -exec echo `git ls-files -z ${MESON_SOURCE_ROOT} | \
   xargs -0 -n1 -I{} -- git log -1 --date=format:"%Y%m%d%H%M" --format="%ad" {} | \
   sort -r | head -n 1` {} +
