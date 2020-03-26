@@ -16,6 +16,12 @@
 cd ${MESON_SOURCE_ROOT}
 
 rev=HEAD
-for f in $(git ls-tree -r -t --full-name --name-only "$rev") ; do
-    touch -d $(git log --pretty=format:%cI -1 "$rev" -- "$f") "$f";
-done
+if [[ "$OSTYPE" == "darwin"* ]]; then
+	git ls-tree -r -t --full-name --name-only "$rev" | while read filename ; do
+		touch -t $(git log --pretty=format:%cd --date=format:%Y%m%d%H%m.%S -1 "$rev" -- "$filename") "$filename";
+	done
+else
+	git ls-tree -r -t --full-name --name-only "$rev" | while read filename ; do
+		touch -d $(git log --pretty=format:%cI -1 "$rev" -- "$filename") "$filename";
+	done
+fi
