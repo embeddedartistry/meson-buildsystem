@@ -1,39 +1,63 @@
-native_compiler_id = meson.get_compiler('c', native : true).get_id()
-target_compiler_id = ''
+##################################################
+# Common Non-language Specific Compiler Settings #
+##################################################
 
-message('Supplying default flags for native compiler: ' + native_compiler_id)
-subdir(native_compiler_id)
-native_compiler_args = compiler_args + compiler_native_args
-native_compiler_warnings = compiler_warnings
-native_cpp_compiler_args = cpp_compiler_args + cpp_compiler_native_args
-native_cpp_compiler_warnings = cpp_compiler_warnings
-native_linker_args = linker_args + linker_native_args
+# NOTE:
+#	For language-specific values, use subdir('build/compiler/<lang>') in your top-level build file
 
-if meson.is_cross_build()
-	target_compiler_id = meson.get_compiler('c', native : false).get_id()
+# These variables should be set for all combinations of compilers and native: true/false
+desired_common_compile_flags = [
+	# Diagnostics
+	'-fdiagnostics-show-option',
+	'-fcolor-diagnostics',
+	# Disabled Warnings
+	'-Wno-unknown-pragmas', # Some compilers complain about our use of #pragma mark
+	'-Wno-c++98-compat',
+	'-Wno-c++98-compat-pedantic',
+	'-Wno-padded',
+	'-Wno-exit-time-destructors', # causes warnings if you use static values
+	'-Wno-global-constructors', # causes warnings if you use static values
+	'-Wno-covered-switch-default',
+	# Desired GCC Warnings
+	'-Wfloat-equal',
+	'-Wconversion',
+	'-Wlogical-op',
+	'-Wundef',
+	'-Wredundant-decls',
+	'-Wshadow',
+	'-Wstrict-overflow=2',
+	'-Wwrite-strings',
+	'-Wpointer-arith',
+	'-Wcast-qual',
+	'-Wformat=2',
+	'-Wformat-truncation',
+	'-Wmissing-include-dirs',
+	'-Wcast-align',
+	'-Wswitch-enum',
+	'-Wsign-conversion',
+	'-Wdisabled-optimization',
+	'-Winline',
+	'-Winvalid-pch',
+	'-Wmissing-declarations',
+	'-Wdouble-promotion',
+	'-Wshadow',
+	'-Wtrampolines',
+	'-Wvector-operation-performance',
+	'-Wshift-overflow=2',
+	'-Wnull-dereference',
+	'-Wduplicated-cond',
+	'-Wshift-overflow=2',
+	'-Wnull-dereference',
+	'-Wduplicated-cond',
+	'-Wcast-align=strict',
+	# Compiler Optimization Flags
+	'-ffunction-sections', # Place each functon in its own section (ELF Only)
+	'-fdata-sections', # Place each data in its own section (ELF Only)
+	'-fdevirtualize', # Attempt to convert calls to virtual functions to direct calls
+]
 
-	if target_compiler_id == native_compiler_id
-		message('Using same flags for target and native compiler')
-		target_compiler_args = native_compiler_args
-		target_compiler_warnings = native_compiler_warnings
-		target_cpp_compiler_args = native_cpp_compiler_args
-		target_cpp_compiler_warnings = native_cpp_compiler_warnings
-		target_linker_args = native_linker_args
-	else
-		message('Supplying default flags for target compiler: ' + target_compiler_id)
-		subdir(target_compiler_id)
-		target_compiler_args = compiler_args + compiler_target_args
-		target_compiler_warnings = compiler_warnings
-		target_cpp_compiler_args = cpp_compiler_args + cpp_compiler_target_args
-		target_cpp_compiler_warnings = cpp_compiler_warnings
-		target_linker_args = linker_args + linker_target_args
-	endif
-
-else
-	message('Since this is not a cross build, target_*_args will match native_*_args')
-	target_compiler_args = native_compiler_args
-	target_compiler_warnings = native_compiler_warnings
-	target_cpp_compiler_args = native_cpp_compiler_args
-	target_cpp_compiler_warnings = native_cpp_compiler_warnings
-	target_linker_args = native_linker_args
-endif
+desired_common_link_flags = [
+	# Optimization Flags
+	'-Wl,-dead_strip', # Strip dead symbols for OS X
+	'-Wl,--gc-sections',
+]
