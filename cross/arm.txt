@@ -18,8 +18,6 @@ objcopy = 'arm-none-eabi-objcopy'
 get_supported_link_arg_flags = ['--specs=nosys.specs']
 # Keep this set, or the sanity check won't pass
 needs_exe_wrapper = true
-c_stdlib = ['libc', 'libc_dep']
-cpp_stdlib = ['libcpp', 'libcxx_full_dep']
 
 [host_machine]
 system = 'none'
