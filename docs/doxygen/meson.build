@@ -34,12 +34,22 @@ doxygen_output_dir = get_variable('doxygen_output_dir', meson.build_root() / 'do
 # Input directories to process
 # Doxygen expects multiple entries to be separated by spaces!
 doxygen_input = get_variable('doxygen_input',
-		meson.source_root() / 'src'
-		+ ' '
-		+ meson.source_root() / 'docs'
-		+ ' '
-		+ meson.source_root() / 'README.md'
+		[
+			meson.source_root() / 'src',
+			meson.source_root() / 'docs',
+			meson.source_root() / 'README.md'
+		]
 	)
+
+# This variable can be used to supply additional enties to the Doxygen input
+# without overriding default values
+doxygen_input_additional = get_variable('doxygen_input_additional', [])
+
+# Process into the proper format: multiple entries are separated by spaces
+doxygen_input_parsed = ''
+foreach item : doxygen_input + doxygen_input_additional
+	doxygen_input_parsed += item + ' '
+endforeach
 
 # Patterns and files to exclude from processing
 # Doxygen expectsmultiple entries to be separated by spaces!
@@ -59,7 +69,7 @@ doxyfile_config_data = {
 	'PROJECT_VERSION': doxygen_version,
 	'PROJECT_DESCRIPTION': doxygen_description,
 	'OUTPUT_DIR': doxygen_output_dir,
-	'INPUT_DIRS': doxygen_input,
+	'INPUT_DIRS': doxygen_input_parsed,
 	'EXCLUDE_PATTERNS': doxygen_excludes,
 	'MD_AS_MAINPAGE': doxygen_mainpage_md
 }
