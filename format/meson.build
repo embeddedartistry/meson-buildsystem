@@ -13,31 +13,72 @@
 #
 # If you want to use the default settings and simply want to add subdirectories to exclude from
 # formatting, you can define a variable called `clangformat_excludes`. This variable should be
-# a string, which is a comma-separated list of directories to exclude from formatting. The
-# -e argument will be automatically supplied for you.
+# an array of directories and files to exclude. This module will convert them to the proper
+# format expected by the script.
 #
 # A list of options can be found below. For more information, please see the documentation
 # in format.sh
-clangformat_default_args = [
-	# Optional exclude directories (separated by commas)
-	# '-e', 'src/external',
-	# Directories to format files in
-	meson.source_root() / 'src,' + meson.source_root() / 'test',
-	# File types to include in formatting (separated by commas)
-	'*.c,*.h,*.cpp,*.hpp',
+
+# [Optional] specify files and directories to exclude from the build
+clangformat_excludes = get_variable('clangformat_excludes', [])
+clangformat_excludes_processed = []
+
+# This variable should be a string, which is a comma-separated list of directories
+# to exclude from formatting. The -e argument is used to indicate excludes in the script.
+if clangformat_excludes.length() != 0
+	clangformat_excludes_processed += '-e'
+	foreach entry : clangformat_excludes
+		clangformat_excludes_processed += entry + ','
+	endforeach
+endif
+
+# Target files and folders to include in clang-format analysis
+clangformat_default_targets = [
+	meson.source_root() / 'src',
+	meson.source_root() / 'test',
 ]
 
-clangformat_args = get_variable('clangformat_args', clangformat_default_args)
-clangformat_excludes = get_variable('clangformat_excludes', [])
+# Override this variable to supply your own list of targets
+clangformat_targets = get_variable('clangformat_targets', clangformat_default_targets)
+# Define this variable to add new targets to the default list
+clangformat_additional_targets = get_variable('clangformat_additional_targets', [])
 
-# Why do we require a string to be used, but default to an empty list?
-# If we defaulted to an empty string value, this would be passed to the shell script
-# and break processing of positional arguments. If we pass an empty list to the command,
-# nothing will happen. Since both string and array objects have a `length()` parameter,
-# we can use this conditional logic safely.
-if clangformat_excludes.length() != 0
-	clangformat_excludes = ['-e', clangformat_excludes]
-endif
+# Convert into expected format for script: CSV
+clangformat_targets_processed = ''
+foreach entry : clangformat_targets + clangformat_additional_targets
+	clangformat_targets_processed += entry + ','
+endforeach
+
+# File types to be included in cppcheck analysis
+clangformat_default_file_types = [
+	'*.c',
+	'*.h',
+	'*.cpp',
+	'*.hpp'
+]
+
+# Override this variable to supply your own list of file types
+clangformat_file_types = get_variable('clangformat_file_types', clangformat_default_file_types)
+clangformat_additional_file_types = get_variable('clangformat_additional_file_types', [])
+
+# Convert into expected format for script: CSV
+clangformat_file_types_processed = ''
+foreach entry : clangformat_file_types + clangformat_additional_file_types
+	clangformat_file_types_processed += entry + ','
+endforeach
+
+## Default arguments used for clang format processing script
+clangformat_default_args = [
+	# Optional exclude directories (separated by commas)
+	clangformat_excludes_processed,
+	# Directories to format files in
+	clangformat_targets_processed,
+	# File types to include in formatting (separated by commas)
+	clangformat_file_types_processed,
+]
+
+# Override this variable to supply your own raw arguments to the script
+clangformat_args = get_variable('clangformat_args', clangformat_default_args)
 
 # Clang-format run target will be unavailable if the program isn't found
 clangformat = find_program('clang-format', required: false, disabler: true)
@@ -50,8 +91,6 @@ if clangformat.found()
 	run_target('format',
 		command: [
 			clangformat_script,
-			# Optional excludes
-			clangformat_excludes,
 			# Supply arguments
 			clangformat_args
 		]
@@ -62,8 +101,6 @@ if clangformat.found()
 			clangformat_script,
 			# Enable patch file,
 			'-p',
-			# Optional excludes
-			clangformat_excludes,
 			# Supply arguments
 			clangformat_args
 		]
