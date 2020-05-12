@@ -12,13 +12,44 @@
 #
 # A list of options can be found below. For more information, please see the documentation
 # in cppcheck.sh
+
+cppcheck_default_custom_rules = [
+	meson.current_source_dir() / 'cppcheck-rules/BitwiseOperatorInConditional/rule.xml',
+	meson.current_source_dir() / 'cppcheck-rules/CollapsibleIfStatements/rule.xml',
+	meson.current_source_dir() / 'cppcheck-rules/EmptyElseBlock/rule.xml',
+	meson.current_source_dir() / 'cppcheck-rules/EmptyCatchStatement/rule.xml',
+	meson.current_source_dir() / 'cppcheck-rules/EmptyDoWhileStatement/rule.xml',
+	meson.current_source_dir() / 'cppcheck-rules/EmptyForStatement/rule.xml',
+	meson.current_source_dir() / 'cppcheck-rules/EmptyIfStatement/rule.xml',
+	meson.current_source_dir() / 'cppcheck-rules/EmptySwitchStatement/rule.xml',
+	meson.current_source_dir() / 'cppcheck-rules/ForLoopShouldBeWhileLoop/rule.xml',
+	meson.current_source_dir() / 'cppcheck-rules/InvertedLogic/rule.xml',
+	meson.current_source_dir() / 'cppcheck-rules/MultipleUnaryOperator/rule.xml',
+	meson.current_source_dir() / 'cppcheck-rules/RedundantConditionalOperator/rule.xml',
+	meson.current_source_dir() / 'cppcheck-rules/RedundantIfStatement/rule.xml',
+	meson.current_source_dir() / 'cppcheck-rules/UnnecessaryElseStatement/rule.xml',
+	meson.current_source_dir() / 'cppcheck-rules/UseStlAlgorithm/rule.xml',
+]
+
+# Specify a list of custom rule files to use with CPPCheck
+# Entries must be strings, not files objects
+cppcheck_custom_rules = get_variable('cppcheck_custom_rules', cppcheck_default_custom_rules)
+# Specify additional rules without overriding the built-in default rules
+cppcheck_additional_rules = get_variable('cppcheck_additional_rules', [])
+
+# Convert array to CSV format
+cppcheck_rules_processed = ''
+foreach entry : cppcheck_custom_rules + cppcheck_additional_rules
+	cppcheck_rules_processed += entry + ','
+endforeach
+
 cppcheck_default_args = [
 	# include dir
 	# '-i', 'include',
 	# files to exclude
 	# '-x', 'path/to/exclude'
-	# custom rule riles
-	# '-r', 'path/to/rule1.xml,path/to/rule2.xml'
+	# custom rule files
+	'-r', cppcheck_rules_processed,
 	# override checks
 	# '-c', 'style,whateverelse'
 	# Files/folders to check
