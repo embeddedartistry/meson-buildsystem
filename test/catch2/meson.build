@@ -37,7 +37,7 @@ catch2_main_file = get_variable('catch2_main_file', files('catch_main.cpp'))
 
 # Default output location when XML reports are generated.
 # Override this variable for an alternate location.
-catch2_file_output_dir = get_variable('catch2_file_output_dir', meson.build_root())
+catch2_file_output_dir = get_variable('catch2_file_output_dir', meson.build_root() / 'test')
 
 # Default settings for our catch2 test programs. You can override these settings
 # by populating a variable called `catch2_compile_settings`.
