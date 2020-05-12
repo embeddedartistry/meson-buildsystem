@@ -4,8 +4,8 @@
 [binaries]
 c = 'gcc-7'
 cpp = 'g++-7'
-# You could also use 'ar' from binutils
-ar = 'gcc-ar-7'
+# For some reason, gcc-ar-7 fails with Meson, even though the binary is real...
+ar = 'ar'
 strip = 'strip'
 
 # Why don't the other programs use -7? They come from binutils, which is separate from GCC (technically):
