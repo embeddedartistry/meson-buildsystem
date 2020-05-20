@@ -5,13 +5,26 @@
 # cppcheck-xml targets.
 #
 # By default, cppcheck will be run with `--enable=style` on the `src` and `test`
-# directories in the source root of the project. If you need to override the default
-# settings, you can do so by defining a variable called cppcheck_args. This variable should
-# be an array of strings, including options that will be passed to the `cppcheck.sh` script,
-# as well as files and folders to be checked by cppcheck.
+# directories in the source root of the project. You can specify additional options like checks,
+# exclude paths, include directories, and custom rule files by populating these variables
+# before invoking this module. Configurable options are:
+#	- cppcheck_paths
+#	- cppcheck_additional_paths (use default, but add files/folders)
+#	- cppcheck_includes
+#	- cppcheck_excludes
+#	- cppcheck_custom_rules
+#	- cppcheck_checks
 #
-# A list of options can be found below. For more information, please see the documentation
-# in cppcheck.sh
+# In all cases, these variables should be defined as arrays of strings, even for n=1.
+#
+# If you need to override the default settings completely, you can do so by defining a variable
+# called cppcheck_args. This variable should be an array of strings, formatted as expected
+# by the cppcheck.sh script. You are responsible for formatting arguments in this case.
+
+cppcheck_default_paths = [
+	meson.source_root() / 'src',
+	meson.source_root() / 'test',
+]
 
 cppcheck_default_custom_rules = [
 	meson.current_source_dir() / 'cppcheck-rules/BitwiseOperatorInConditional/rule.xml',
@@ -31,30 +44,70 @@ cppcheck_default_custom_rules = [
 	meson.current_source_dir() / 'cppcheck-rules/UseStlAlgorithm/rule.xml',
 ]
 
-# Specify a list of custom rule files to use with CPPCheck
-# Entries must be strings, not files objects
-cppcheck_custom_rules = get_variable('cppcheck_custom_rules', cppcheck_default_custom_rules)
-# Specify additional rules without overriding the built-in default rules
-cppcheck_additional_rules = get_variable('cppcheck_additional_rules', [])
+cppcheck_paths = get_variable('cppcheck_paths', cppcheck_default_paths)
+cppcheck_additional_paths = get_variable('cppcheck_additional_paths', [])
 
-# Convert array to CSV format
-cppcheck_rules_processed = ''
-foreach entry : cppcheck_custom_rules + cppcheck_additional_rules
-	cppcheck_rules_processed += entry + ','
-endforeach
+# Include directory search paths for Cppcheck
+cppcheck_includes = get_variable('cppcheck_includes', [])
+if cppcheck_includes.length() > 0
+	cppcheck_includes_processed = ''
+	foreach entry : cppcheck_includes
+		cppcheck_includes_processed += entry + ','
+	endforeach
+	# Convert to array with proper script argument
+	cppcheck_includes_processed = ['-i', cppcheck_includes_processed]
+else
+	cppcheck_includes_processed = []
+endif
+
+# Files to exclude from analysis
+cppcheck_excludes = get_variable('cppcheck_excludes', [])
+if cppcheck_excludes.length() > 0
+	cppcheck_excludes_processed = ''
+	foreach entry : cppcheck_excludes
+		cppcheck_excludes_processed += entry + ','
+	endforeach
+	# Convert to array with proper script argument
+	cppcheck_excludes_processed = ['-x', cppcheck_excludes_processed]
+else
+	cppcheck_excludes_processed = []
+endif
+
+# Custom rules to use
+cppcheck_custom_rules = get_variable('cppcheck_custom_rules', cppcheck_default_custom_rules)
+if cppcheck_custom_rules.length() > 0
+	cppcheck_custom_rules_processed = ''
+	foreach entry : cppcheck_custom_rules
+		cppcheck_custom_rules_processed += entry + ','
+	endforeach
+	# Convert to array with proper script argument
+	cppcheck_custom_rules_processed = ['-r', cppcheck_custom_rules_processed]
+else
+	cppcheck_custom_rules_processed = []
+endif
+
+# style checks to override
+cppcheck_checks = get_variable('cppcheck_checks', [])
+if cppcheck_checks.length() > 0
+	cppcheck_checks_processed = ''
+	foreach entry : cppcheck_checks
+		cppcheck_checks_processed += entry + ','
+	endforeach
+	# Convert to array with proper script argument
+	cppcheck_checks_processed = ['-c', cppcheck_checks_processed]
+else
+	cppcheck_checks_processed = []
+endif
 
 cppcheck_default_args = [
-	# include dir
-	# '-i', 'include',
-	# files to exclude
-	# '-x', 'path/to/exclude'
-	# custom rule files
-	'-r', cppcheck_rules_processed,
-	# override checks
-	# '-c', 'style,whateverelse'
-	# Files/folders to check
-	meson.source_root() / 'src',
-	meson.source_root() / 'test',
+	# getopts arguments
+	cppcheck_includes_processed,
+	cppcheck_excludes_processed,
+	cppcheck_custom_rules_processed,
+	cppcheck_checks_processed,
+	# Positional Arguments
+	cppcheck_paths,
+	cppcheck_additional_paths,
 ]
 
 cppcheck_args = get_variable('cppcheck_args', cppcheck_default_args)
@@ -85,3 +138,4 @@ if cppcheck.found()
 		],
 	)
 endif
+
