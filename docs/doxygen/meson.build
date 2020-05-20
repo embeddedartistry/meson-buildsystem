@@ -32,16 +32,15 @@ doxygen_description = get_variable('doxygen_description', '')
 doxygen_output_dir = get_variable('doxygen_output_dir', meson.build_root() / 'docs')
 
 # Input directories to process
-# Doxygen expects multiple entries to be separated by spaces!
 doxygen_input = get_variable('doxygen_input',
-		[
-			meson.source_root() / 'src',
-			meson.source_root() / 'docs',
-			meson.source_root() / 'README.md'
-		]
-	)
+	[
+		meson.source_root() / 'src',
+		meson.source_root() / 'docs',
+		meson.source_root() / 'README.md'
+	]
+)
 
-# This variable can be used to supply additional enties to the Doxygen input
+# This variable can be used to supply additional entries to the Doxygen input
 # without overriding default values
 doxygen_input_additional = get_variable('doxygen_input_additional', [])
 
@@ -52,10 +51,10 @@ foreach item : doxygen_input + doxygen_input_additional
 endforeach
 
 # Patterns and files to exclude from processing
-# Doxygen expectsmultiple entries to be separated by spaces!
+# Doxygen expects multiple entries to be separated by spaces!
 doxygen_excludes = get_variable('doxygen_excludes',
-		'catch.hpp',
-	)
+	'catch.hpp',
+)
 
 # Use a markdown file as the Doxygen main page
 doxygen_mainpage_md = get_variable('doxygen_mainpage_md', meson.source_root() / 'README.md')
