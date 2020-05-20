@@ -22,7 +22,6 @@
 
 MESON_BUILD_ROOT=${MESON_BUILD_ROOT:-buildresults}
 MESON_SOURCE_ROOT=${MESON_SOURCE_ROOT:-../../}
-DIRS=
 FILE_TYPES=
 EXCLUDES_ARGS=
 PATCH='0'
@@ -41,16 +40,12 @@ done
 # Shift off the getopts args, leaving us with positional args
 shift $((OPTIND -1))
 
-IFS=',' read -ra ENTRIES <<< "$1"
-for entry in "${ENTRIES[@]}"; do
-	DIRS="$DIRS $entry"
-done
+IFS=',' read -ra DIRS <<< "$1"
 
 IFS=',' read -ra ENTRIES <<< "$2"
 for entry in "${ENTRIES[@]}"; do
 	FILE_TYPES="$FILE_TYPES -o -iname \"$entry\""
 done
-
 
 IFS=',' read -ra ENTRIES <<< "$EXCLUDES_ARGS"
 for entry in "${ENTRIES[@]}"; do
@@ -70,7 +65,7 @@ else
 fi
 
 cd ${MESON_SOURCE_ROOT}
-eval find ${DIRS} ${EXCLUDES} -type f ${FILE_TYPES} \
+eval find ${DIRS[@]} ${EXCLUDES} -type f ${FILE_TYPES} \
 	| xargs clang-format -style=file -i -fallback-style=none
 
 if [ "$PATCH" == '1' ]; then
