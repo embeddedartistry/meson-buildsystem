@@ -10,6 +10,8 @@
 # This module provides multiple customization points:
 #	- You can override the directories to analyze by setting a variable called lizard_paths.
 #		This variable should be a string or an array of strings.
+#	- You can add directories to the default list by setting a variable called lizard_additional_paths.
+#		This variable should be a string or an array of strings.
 #	- You can override the default value of specific parameters:
 #		* lizard_length (integer) - the maximum length of a function
 #		* lizard_ccn (integer) - the maximum CCN of a function
@@ -32,6 +34,7 @@ lizard_default_paths = [
 ]
 
 lizard_paths = get_variable('lizard_paths', lizard_default_paths)
+lizard_additional_paths = get_variable('lizard_additional_paths', [])
 
 lizard_insert_options = get_variable('lizard_insert_options', [])
 
@@ -50,7 +53,8 @@ lizard_default_args = [
 	'--CCN', lizard_ccn,
 	'--arguments', lizard_arguments,
 	# Source Directories to audit
-	lizard_paths
+	lizard_paths,
+	lizard_additional_paths,
 ]
 
 lizard_args = get_variable('lizard_args', lizard_default_args)
