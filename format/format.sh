@@ -15,7 +15,7 @@
 #	e.g.: -e src/gdtoa,src/external
 # -p generates a patch file using a `git`
 #
-## NOTE: Due to getopts limitations, optional arguments must preceed positional arguments
+## NOTE: Due to getopts limitations, optional arguments must precede positional arguments
 #
 ## Processing strategy for separating CSVs is derived from:
 ## https://stackoverflow.com/questions/918886/how-do-i-split-a-string-on-a-delimiter-in-bash#tab-top
