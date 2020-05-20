@@ -21,15 +21,16 @@
 
 # [Optional] specify files and directories to exclude from the build
 clangformat_excludes = get_variable('clangformat_excludes', [])
-clangformat_excludes_processed = []
 
 # This variable should be a string, which is a comma-separated list of directories
 # to exclude from formatting. The -e argument is used to indicate excludes in the script.
-if clangformat_excludes.length() != 0
+if clangformat_excludes.length() > 0
 	clangformat_excludes_processed += '-e'
 	foreach entry : clangformat_excludes
 		clangformat_excludes_processed += entry + ','
 	endforeach
+else
+	clangformat_excludes_processed = []
 endif
 
 # Target files and folders to include in clang-format analysis
