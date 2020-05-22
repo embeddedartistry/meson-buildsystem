@@ -18,7 +18,7 @@ desired_common_compile_flags = [
 	'-Wno-exit-time-destructors', # causes warnings if you use static values
 	'-Wno-global-constructors', # causes warnings if you use static values
 	'-Wno-covered-switch-default',
-	# Desired GCC Warnings
+	# Desired Warnings
 	'-Wfloat-equal',
 	'-Wconversion',
 	'-Wlogical-op',
@@ -51,7 +51,7 @@ desired_common_compile_flags = [
 	'-Wduplicated-cond',
 	'-Wcast-align=strict',
 	# Compiler Optimization Flags
-	'-ffunction-sections', # Place each functon in its own section (ELF Only)
+	'-ffunction-sections', # Place each function in its own section (ELF Only)
 	'-fdata-sections', # Place each data in its own section (ELF Only)
 	'-fdevirtualize', # Attempt to convert calls to virtual functions to direct calls
 ]
