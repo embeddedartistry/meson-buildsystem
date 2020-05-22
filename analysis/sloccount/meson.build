@@ -50,7 +50,7 @@ sloccount_default_args = [
 	'--datadir', meson.current_build_dir(),
 	# Effort factor/exponent
 	'--effort', sloccount_effort,
-	# Shcedule factor/exponent
+	# Schedule factor/exponent
 	'--schedule', sloccount_schedule,
 	# Annual Salary Setting
 	'--personcost', sloccount_salary,

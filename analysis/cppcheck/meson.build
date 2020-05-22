@@ -75,6 +75,8 @@ endif
 
 # Custom rules to use
 cppcheck_custom_rules = get_variable('cppcheck_custom_rules', cppcheck_default_custom_rules)
+# Add additional rules to the default list
+cppcheck_custom_rules += get_variable('cppcheck_additional_custom_rules', [])
 if cppcheck_custom_rules.length() > 0
 	cppcheck_custom_rules_processed = ''
 	foreach entry : cppcheck_custom_rules
