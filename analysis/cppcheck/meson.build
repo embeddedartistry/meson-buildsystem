@@ -68,7 +68,7 @@ if cppcheck_excludes.length() > 0
 		cppcheck_excludes_processed += entry + ','
 	endforeach
 	# Convert to array with proper script argument
-	cppcheck_excludes_processed = ['-x', cppcheck_excludes_processed]
+	cppcheck_excludes_processed = ['-e', cppcheck_excludes_processed]
 else
 	cppcheck_excludes_processed = []
 endif
