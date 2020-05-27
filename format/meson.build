@@ -25,10 +25,11 @@ clangformat_excludes = get_variable('clangformat_excludes', [])
 # This variable should be a string, which is a comma-separated list of directories
 # to exclude from formatting. The -e argument is used to indicate excludes in the script.
 if clangformat_excludes.length() > 0
-	clangformat_excludes_processed = ['-e']
+	clangformat_excludes_processed = ''
 	foreach entry : clangformat_excludes
 		clangformat_excludes_processed += entry + ','
 	endforeach
+	clangformat_excludes_processed = ['-e', clangformat_excludes_processed]
 else
 	clangformat_excludes_processed = []
 endif
