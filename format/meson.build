@@ -15,6 +15,12 @@
 # formatting, you can define a variable called `clangformat_excludes`. This variable should be
 # an array of directories and files to exclude. This module will convert them to the proper
 # format expected by the script.
+#	NOTE: Meson You need to exclude with the full path - make sure to add the source root!
+#		You will also need to leave off the trailing slash.
+# 	clangformat_excludes = [
+#		meson.source_root() / 'src/utilities/type_safe',
+#		meson.source_root() / 'src/utilities/debug_assert',
+#	]
 #
 # A list of options can be found below. For more information, please see the documentation
 # in format.sh
