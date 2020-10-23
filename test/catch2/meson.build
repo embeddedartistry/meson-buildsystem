@@ -74,7 +74,8 @@ if catch2_disable_builtin_targets == false
 			catch2_dep,
 			catch2_tests_dep
 		],
-		native: true
+		native: true,
+		build_by_default: meson.is_subproject() == false
 	)
 
 	test(catch2_test_program_name,
