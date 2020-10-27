@@ -5,11 +5,7 @@
 # NOTE:
 #	For language-specific values, use subdir('build/compiler/<lang>') in your top-level build file
 
-# These variables should be set for all combinations of compilers and native: true/false
-desired_common_compile_flags = [
-	# Diagnostics
-	'-fdiagnostics-show-option',
-	'-fcolor-diagnostics',
+desired_common_warning_flags = [
 	# Disabled Warnings
 	'-Wno-unknown-pragmas', # Some compilers complain about our use of #pragma mark
 	'-Wno-c++98-compat',
@@ -50,11 +46,23 @@ desired_common_compile_flags = [
 	'-Wnull-dereference',
 	'-Wduplicated-cond',
 	'-Wcast-align=strict',
+]
+
+# These variables should be set for all combinations of compilers and native: true/false
+desired_common_compile_flags = [
+	# Diagnostics
+	'-fdiagnostics-show-option',
+	'-fcolor-diagnostics',
 	# Compiler Optimization Flags
 	'-ffunction-sections', # Place each function in its own section (ELF Only)
 	'-fdata-sections', # Place each data in its own section (ELF Only)
 	'-fdevirtualize', # Attempt to convert calls to virtual functions to direct calls
 ]
+
+if meson.is_subproject() == false
+	desired_common_compile_flags += desired_common_warning_flags
+endif
+
 
 desired_common_link_flags = [
 	# Optimization Flags
