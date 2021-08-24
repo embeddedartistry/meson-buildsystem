@@ -114,3 +114,13 @@ if clangformat.found()
 		]
 	)
 endif
+
+cp = find_program('cp')
+
+run_target('update-format-rules',
+	command: [
+		cp,
+		meson.current_source_dir() + '/.clang-format',
+		meson.source_root()
+	]
+)
