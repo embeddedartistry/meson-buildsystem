@@ -69,5 +69,5 @@ done
 # Shift off the getopts args, leaving us with positional args
 shift $((OPTIND -1))
 
-eval cppcheck --quiet --enable=$CHECKS --force ${XML_ARGS} \
+eval cppcheck --quiet --enable=$CHECKS --inline-suppr --force ${XML_ARGS} \
 	$INCLUDES $EXCLUDES $RULES $@ ${XML_REDIRECT}
