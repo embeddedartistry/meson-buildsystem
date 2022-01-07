@@ -32,7 +32,7 @@ desired_common_warning_flags = [
 	'-Wswitch-enum',
 	'-Wsign-conversion',
 	'-Wdisabled-optimization',
-	'-Winline',
+	# '-Winline', # Now disabled because it is mostly warning us about default constructors and destructors
 	'-Winvalid-pch',
 	'-Wmissing-declarations',
 	'-Wdouble-promotion',
