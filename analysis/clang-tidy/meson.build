@@ -33,5 +33,15 @@ if clangtidy.found()
 				clangtidy_files
 			],
 		)
+		run_target('clang-tidy-fix',
+			command: [
+				clangtidy_script,
+				# Optional user overrides
+				get_variable('clangtidy_options', ''),
+				'--fix-errors', '--fix-notes',
+				# Files,
+				clangtidy_files
+			],
+		)
 	endif
 endif
