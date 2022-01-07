@@ -52,6 +52,8 @@ lizard_default_args = [
 	'--length', lizard_length,
 	'--CCN', lizard_ccn,
 	'--arguments', lizard_arguments,
+	# Counts switch/case with multiple args as 1
+	'--modified',
 	# Source Directories to audit
 	lizard_paths,
 	lizard_additional_paths,
