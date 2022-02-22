@@ -6,6 +6,9 @@ cpp = 'avr-g++'
 ar = 'avr-gcc-ar'
 strip = 'avr-strip'
 
+[properties]
+objcopy = 'avr-objcopy'
+
 [host_machine]
 system = 'none'
 cpu_family = 'avr'
