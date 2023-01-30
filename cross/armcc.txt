@@ -1,0 +1,16 @@
+# This file assumes that path to the arm compiler toolchain is added
+# to the environment(PATH) variable, so that Meson can find
+# the armclang, armlink and armar while building.
+[binaries]
+c = 'armcc'
+cpp = 'armcc'
+ar = 'armar'
+strip = 'armar'
+
+[host_machine]
+system = 'none'
+cpu_family = 'arm'
+# CPU should be redefined in child cross files - this is a placeholder
+# that will be used in case a child file does not override this setting
+cpu = 'arm-generic'
+endian = 'little'
