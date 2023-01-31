@@ -25,15 +25,13 @@
 
 catch2_subproject = subproject('catch2')
 catch2_dep = catch2_subproject.get_variable('catch2_dep')
+catch2_with_main_dep = catch2_subproject.get_variable('catch2_with_main_dep')
 
 # The default test program name is the project name + _catch2_test
 # You can override this variable to change the program name.
 catch2_test_program_name = get_variable('catch2_test_program_name',
 										meson.project_name() + '_catch2_test')
-
-# Default main() declaration for catch2. You can override this variable with a files()
-# variable if you need custom settings
-catch2_main_file = get_variable('catch2_main_file', files('catch_main.cpp'))
+catch2_test_program_name = catch2_test_program_name.replace(' ', '_')
 
 # Default output location when XML reports are generated.
 # Override this variable for an alternate location.
@@ -68,10 +66,9 @@ catch2_catchxml_args = ['-s', '-r', 'xml', '-o',
 
 if catch2_disable_builtin_targets == false
 	catch2_tests = executable(catch2_test_program_name,
-		catch2_main_file,
 		cpp_args: catch2_compile_settings,
 		dependencies: [
-			catch2_dep,
+			catch2_with_main_dep,
 			catch2_tests_dep
 		],
 		native: true,
