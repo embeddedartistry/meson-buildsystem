@@ -3,7 +3,7 @@
 ##################################################
 
 # NOTE:
-#	For language-specific values, use subdir('build/compiler/<lang>') in your top-level build file
+#	For language-specific values, use subdir('meson/compiler/<lang>') in your top-level build file
 
 desired_common_warning_flags = [
 	# Disabled Warnings

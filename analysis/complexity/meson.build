@@ -93,5 +93,5 @@ complexity_xml = custom_target('complexity.xml',
 )
 
 # Convenience target to generate the XML file via a command, instead of referencing the file
-# directly (e.g., ninja -C buildresults/build/analysis/complexity/complexity.xml)
+# directly (e.g., ninja -C buildresults/meson/analysis/complexity/complexity.xml)
 alias_target('complexity-xml', complexity_xml)
