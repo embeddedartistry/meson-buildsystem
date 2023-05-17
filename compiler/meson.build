@@ -66,6 +66,6 @@ endif
 
 desired_common_link_flags = [
 	# Optimization Flags
-	'-Wl,-dead_strip', # Strip dead symbols for OS X
+	'-Wl,-dead_strip', # Strip dead symbols for MacOS
 	'-Wl,--gc-sections',
 ]

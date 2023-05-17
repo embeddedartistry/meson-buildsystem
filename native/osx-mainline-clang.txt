@@ -1,4 +1,4 @@
-# Native Build File for using Mainline Clang on OS X
+# Native Build File for using Mainline Clang on MacOS
 # This is expected to be installed by Homebrew
 
 [binaries]
