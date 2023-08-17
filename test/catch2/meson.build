@@ -24,8 +24,8 @@
 # Default targets can be disabled altogether by setting `catch2_disable_builtin_targets` to true
 
 catch2_subproject = subproject('catch2')
-catch2_dep = catch2_subproject.get_variable('catch2_dep')
-catch2_with_main_dep = catch2_subproject.get_variable('catch2_with_main_dep')
+catch2_dep = catch2_subproject.get_variable('catch2_native_dep')
+catch2_with_main_dep = catch2_subproject.get_variable('catch2_with_main_native_dep')
 
 # The default test program name is the project name + _catch2_test
 # You can override this variable to change the program name.
