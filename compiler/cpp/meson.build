@@ -23,6 +23,6 @@ desired_cpp_common_warning_flags = [
 # Use these variables to control whether you're setting flags for native: true/false
 desired_cpp_compile_flags = []
 if meson.is_subproject() == false
-desired_cpp_compile_flags += desired_cpp_common_warning_flags
+	desired_cpp_compile_flags += desired_cpp_common_warning_flags
 endif
 desired_native_cpp_compile_flags = desired_cpp_compile_flags
