@@ -1,4 +1,4 @@
-# Native Build File for using GCC-9
+# Native Build File for using "GCC" without a specific version
 # Binaries are expected to be found in the PATH
 
 [binaries]
