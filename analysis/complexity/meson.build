@@ -29,8 +29,8 @@
 # For a full list of available argument options, see the help output of the lizard program.
 
 lizard_default_paths = [
-	meson.source_root() / 'src',
-	meson.source_root() / 'test',
+	meson.project_source_root() / 'src',
+	meson.project_source_root() / 'test',
 ]
 
 lizard_paths = get_variable('lizard_paths', lizard_default_paths)

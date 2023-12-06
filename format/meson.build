@@ -18,8 +18,8 @@
 #	NOTE: Meson You need to exclude with the full path - make sure to add the source root!
 #		You will also need to leave off the trailing slash.
 # 	clangformat_excludes = [
-#		meson.source_root() / 'src/utilities/type_safe',
-#		meson.source_root() / 'src/utilities/debug_assert',
+#		meson.project_source_root() / 'src/utilities/type_safe',
+#		meson.project_source_root() / 'src/utilities/debug_assert',
 #	]
 #
 # A list of options can be found below. For more information, please see the documentation
@@ -42,8 +42,8 @@ endif
 
 # Target files and folders to include in clang-format analysis
 clangformat_default_targets = [
-	meson.source_root() / 'src',
-	meson.source_root() / 'test',
+	meson.project_source_root() / 'src',
+	meson.project_source_root() / 'test',
 ]
 
 # Override this variable to supply your own list of targets
@@ -121,6 +121,6 @@ run_target('update-format-rules',
 	command: [
 		cp,
 		meson.current_source_dir() + '/.clang-format',
-		meson.source_root()
+		meson.project_source_root()
 	]
 )

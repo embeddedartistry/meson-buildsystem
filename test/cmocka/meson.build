@@ -43,7 +43,7 @@ endif
 
 # Tell CMocka where to place test files
 # Note that this directory must exist prior to running the test program
-cmocka_test_output_dir = 'CMOCKA_XML_FILE=' + meson.build_root() + '/test/%g.xml'
+cmocka_test_output_dir = 'CMOCKA_XML_FILE=' + meson.project_build_root() + '/test/%g.xml'
 
 # This files variable can be used to invoke a CMocka program with an environment variable
 # such as the one above
@@ -57,7 +57,7 @@ cmocka_with_env_script = files('../../scripts/exec_program_with_env.sh')
 # This files object to gain access to the script
 delete_files_script = files('../../scripts/delete_files_in_dir.sh')
 
-delete_test_results_root = get_variable('delete_test_results_root', meson.build_root() / 'test')
+delete_test_results_root = get_variable('delete_test_results_root', meson.project_build_root() / 'test')
 delete_test_results_rule = get_variable('delete_test_results_rule', '*.xml')
 delete_test_results_recursive = get_variable('delete_test_results_recursive', true)
 

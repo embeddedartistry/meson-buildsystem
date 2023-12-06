@@ -6,20 +6,20 @@
 linker_script_flags = []
 linker_script_deps = []
 
-foreach entry : meson.get_cross_property('linker_paths', [''])
+foreach entry : meson.get_external_property('linker_paths', [''])
 	if entry != ''
-		linker_script_flags += '-L' + meson.source_root() / entry
+		linker_script_flags += '-L' + meson.project_source_root() / entry
 	endif
 endforeach
 
-foreach entry : meson.get_cross_property('linker_scripts', [''])
+foreach entry : meson.get_external_property('linker_scripts', [''])
 	if entry != ''
 		linker_script_flags += '-T' + entry
 	endif
 endforeach
 
-foreach entry : meson.get_cross_property('link_depends', [''])
+foreach entry : meson.get_external_property('link_depends', [''])
 	if entry != ''
-		linker_script_deps += meson.source_root() / entry
+		linker_script_deps += meson.project_source_root() / entry
 	endif
 endforeach

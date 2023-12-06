@@ -7,8 +7,8 @@
 # with your own values before invoking this module.
 
 vale_default_files = [
-	meson.source_root() + '/docs/',
-	meson.source_root() + '/README.md'
+	meson.project_source_root() + '/docs/',
+	meson.project_source_root() + '/README.md'
 ]
 
 # Override this variable to control what files and folders vale will analyze

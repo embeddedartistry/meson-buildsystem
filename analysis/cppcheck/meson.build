@@ -22,8 +22,8 @@
 # by the cppcheck.sh script. You are responsible for formatting arguments in this case.
 
 cppcheck_default_paths = [
-	meson.source_root() / 'src',
-	meson.source_root() / 'test',
+	meson.project_source_root() / 'src',
+	meson.project_source_root() / 'test',
 ]
 
 cppcheck_default_custom_rules = [

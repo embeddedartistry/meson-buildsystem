@@ -22,8 +22,8 @@
 #	https://dwheeler.com/sloccount/sloccount.html#cocomo
 
 sloccount_default_directories = [
-	meson.source_root() / 'src',
-	meson.source_root() / 'test',
+	meson.project_source_root() / 'src',
+	meson.project_source_root() / 'test',
 ]
 
 sloccount_dirs = get_variable('sloccount_dirs', sloccount_default_directories)

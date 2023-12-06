@@ -12,7 +12,7 @@
 # You can also provide your own Doxyfile in your project repo by overriding the doxyfile_config
 # variable. This will disable the configuration step, using your Doxyfile for the conversion step.
 # If you choose to go this route, we recommend making your Doxyfile configurable so that you
-# can supply meson.build_root() appropriately for the Doxygen output directory.
+# can supply meson.project_build_root() appropriately for the Doxygen output directory.
 
 
 ########################
@@ -29,14 +29,14 @@ doxygen_version = get_variable('doxygen_version', meson.project_version())
 doxygen_description = get_variable('doxygen_description', '')
 
 # Where the generated output should be placed
-doxygen_output_dir = get_variable('doxygen_output_dir', meson.build_root() / 'docs')
+doxygen_output_dir = get_variable('doxygen_output_dir', meson.project_build_root() / 'docs')
 
 # Input directories to process
 doxygen_input = get_variable('doxygen_input',
 	[
-		meson.source_root() / 'src',
-		meson.source_root() / 'docs',
-		meson.source_root() / 'README.md'
+		meson.project_source_root() / 'src',
+		meson.project_source_root() / 'docs',
+		meson.project_source_root() / 'README.md'
 	]
 )
 
@@ -57,7 +57,7 @@ doxygen_excludes = get_variable('doxygen_excludes',
 )
 
 # Use a markdown file as the Doxygen main page
-doxygen_mainpage_md = get_variable('doxygen_mainpage_md', meson.source_root() / 'README.md')
+doxygen_mainpage_md = get_variable('doxygen_mainpage_md', meson.project_source_root() / 'README.md')
 
 #################################
 # Populate Configuration Values #

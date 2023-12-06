@@ -35,7 +35,7 @@ catch2_test_program_name = catch2_test_program_name.replace(' ', '_')
 
 # Default output location when XML reports are generated.
 # Override this variable for an alternate location.
-catch2_file_output_dir = get_variable('catch2_file_output_dir', meson.build_root() / 'test')
+catch2_file_output_dir = get_variable('catch2_file_output_dir', meson.project_build_root() / 'test')
 
 # Default settings for our catch2 test programs. You can override these settings
 # by populating a variable called `catch2_compile_settings`.
