@@ -48,6 +48,8 @@ default_catch2_settings = [
 	'-DMSE_SCOPEPOINTER_DEBUG_RUNTIME_CHECKS_DISABLED',
 	'-fexceptions',
 	'-funwind-tables',
+	# Prevent double promotion warning when using Catch2 float matchers
+	'-Wno-double-promotion'
 ]
 
 # Override this variable to supply your own settings instead of using the defaults.
