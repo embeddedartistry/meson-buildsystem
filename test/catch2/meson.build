@@ -75,21 +75,26 @@ if catch2_disable_builtin_targets == false
 		build_by_default: meson.is_subproject() == false
 	)
 
-	test(catch2_test_program_name,
-		catch2_tests,
-		args: catch2_junit_args
-	)
+	# What I really want to do is the following, but I'm not ready to
+	# do all of that instrumentation yet:
+	# if meson.is_subproject() == false and get_option('register-subproject-tests') == false
+	if meson.is_subproject() == false
+		test(catch2_test_program_name,
+			catch2_tests,
+			args: catch2_junit_args
+		)
 
-	run_target('catch2-tests',
-		command: catch2_tests
-	)
+		run_target('catch2-tests',
+			command: catch2_tests
+		)
 
-	run_target('catch2-tests-xml',
-		command: [catch2_tests, catch2_junit_args]
-	)
+		run_target('catch2-tests-xml',
+			command: [catch2_tests, catch2_junit_args]
+		)
 
-	run_target('catch2-tests-catch-xml',
-		command: [catch2_tests, catch2_catchxml_args,]
-	)
+		run_target('catch2-tests-catch-xml',
+			command: [catch2_tests, catch2_catchxml_args,]
+		)
+	endif
 
 endif
