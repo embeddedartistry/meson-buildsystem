@@ -3,7 +3,7 @@
 # Requires that arm-none-eabi-* is found in your PATH
 # For more information: http://mesonbuild.com/Cross-compilation.html
 
-[properties]
+[built-in options]
 c_args = [ '-mcpu=cortex-m7', '-mfloat-abi=hard', '-mfpu=fpv5-sp-d16', '-mabi=aapcs', '-mthumb',]
 c_link_args = [ '-mcpu=cortex-m7', '-mfloat-abi=hard', '-mfpu=fpv5-sp-d16', '-mabi=aapcs', '-mthumb',]
 cpp_args = [ '-mcpu=cortex-m7', '-mfloat-abi=hard', '-mfpu=fpv5-sp-d16', '-mabi=aapcs', '-mthumb',]
