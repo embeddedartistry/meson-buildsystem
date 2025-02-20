@@ -22,8 +22,10 @@ if host_c_compiler.has_link_argument('-Wl,-Map,test.map')
 	host_map_file = '-Wl,-Map,@0@.map'
 elif host_c_compiler.has_link_argument('-Wl,-map,test.map')
 	host_map_file = '-Wl,-map,@0@.map'
-elif host_c_compiler.has_multi_link_arguments('--specs=nosys.specs', '-Wl,-Map,test.map')
-	# ARM will fail the check without --specs=nosys.specs
+elif host_c_compiler.has_multi_link_arguments('-lnosys', '-lc', '-Wl,-Map,test.map')
+	# ARM will fail the check without --specs=nosys.specs (originally)
+	# but that changed with 11.x as they added warnings, which Meson
+	# views as errors. So now we have amended the check.
 	host_map_file = '-Wl,-Map,@0@.map'
 elif host_c_compiler_id == 'msvc'
 	host_map_file = '/MAP:@0@.map'
